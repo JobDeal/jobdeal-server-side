@@ -1,0 +1,18 @@
+:root {
+  --primary: rgba(254, 1, 129, 1);
+  --primary-dark: rgba(209, 0, 105, 1);
+  --primary-70: rgba(254, 1, 129, 0.7);
+  --primary-50: rgba(254, 1, 129, 0.5);
+  --primary-30: rgba(254, 1, 129, 0.3);
+  --primary-10: rgba(254, 1, 129, 0.1);
+  --logo: #252d37;
+  --sidebar-icon: #252d37;
+}
+
+.bg-grad-sidebar {
+    background-image: linear-gradient(0deg, #7e8ea1 0%, #3c4655 100%);
+}
+
+.bg-logo{
+    background-color: var(--logo);
+}

@@ -1,0 +1,47 @@
+version: '3.8'
+volumes:
+  code_volume:
+services:
+  mysql:
+    image: mysql:5.7
+    tmpfs:
+      - /var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=jobdealtesting
+      - MYSQL_USER=jobdealtesting
+      - MYSQL_PASSWORD=secret
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+  app:
+    container_name: jobdeal
+    build:
+      context: .docker/test/
+      dockerfile: Dockerfile
+      args:
+        USERNAME: jobdeal
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+    environment:
+      - ENV=testing
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=jobdealtesting
+      - DB_USERNAME=jobdealtesting
+      - DB_PASSWORD=secret
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    working_dir: /var/www/jobdeal
+    volumes:
+      - ./:/var/www/jobdeal:Z
