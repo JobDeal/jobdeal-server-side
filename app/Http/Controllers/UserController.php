@@ -37,6 +37,28 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    /**
+     * @SWG\Post(
+     *     path="/user/login",
+     *     summary="Login, generate auth token",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="password", type="string"),
+     *             @SWG\Property(property="country", type="string"),
+     *             @SWG\Property(property="locale", type="string"),
+     *             @SWG\Property(property="timezone", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function login(Request $request){
         $validator = Validator::make($request->json()->all(), [
             'email' => 'max:255|email|required',
@@ -113,6 +135,38 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/register",
+     *     summary="Register",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="password", type="string"),
+     *             @SWG\Property(property="name", type="string"),
+     *             @SWG\Property(property="surname", type="string"),
+     *             @SWG\Property(property="mobile", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="zip", type="string"),
+     *             @SWG\Property(property="city", type="string"),
+     *             @SWG\Property(property="country", type="string"),
+     *             @SWG\Property(property="locale", type="string"),
+     *             @SWG\Property(property="timezone", type="string"),
+     *             @SWG\Property(property="uid", type="string"),
+     *             @SWG\Property(property="roleId", type="string"),
+     *             @SWG\Property(property="bankId", type="string"),
+     *             @SWG\Property(property="aboutMe", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function register(Request $request){
         $validator = Validator::make($request->json()->all(), [
             'email' => 'max:255|email|required',
@@ -143,33 +197,33 @@ class UserController extends Controller
         $locale = $request->json("locale", "en");
         $timezone = $request->json("timezone", null);
 
-        if (trim($country) == "" || strlen($country) > 3 || !$timezone) { // nema zemlje iz nekog razloga, pozovi ip json i pribavi zemlju
-            $client = new \GuzzleHttp\Client([]);
-            $res = $client->request('GET', 'http://ip-api.com/json/' . \request()->ip(), []);
+        // if (trim($country) == "" || strlen($country) > 3 || !$timezone) { // nema zemlje iz nekog razloga, pozovi ip json i pribavi zemlju
+        //     $client = new \GuzzleHttp\Client([]);
+        //     $res = $client->request('GET', 'http://ip-api.com/json/' . \request()->ip(), []);
 
-            if ($res->getStatusCode() == 200) {
-                $country = strtolower(json_decode($res->getBody(), true)["countryCode"]);
-                $timezone = strtolower(json_decode($res->getBody(), true)["timezone"]);
-            } else {
-                Log::error("Country fail!");
-                return response("Country fail", 404);
-            }
-        }
+        //     if ($res->getStatusCode() == 200) {
+        //         $country = strtolower(json_decode($res->getBody(), true)["countryCode"]);
+        //         $timezone = strtolower(json_decode($res->getBody(), true)["timezone"]);
+        //     } else {
+        //         Log::error("Country fail!");
+        //         return response("Country fail", 404);
+        //     }
+        // }
 
         $user = new User();
         $user->email = $request->json("email");
         $user->name = $request->json("name");
         $user->surname = $request->json("surname");
 
-        $verification = Verification::where('uid', '=', $request->json('uid'))->first();
+        // $verification = Verification::where('uid', '=', $request->json('uid'))->first();
 
-        if (!$verification) {
-            return response(Helper::jsonError('Verification not found'), 404);
-        }
+        // if (!$verification) {
+        //     return response(Helper::jsonError('Verification not found'), 404);
+        // }
 
-        if ($verification->phone != $request->json("mobile")) {
-            return response(Helper::jsonError("Verification phone different than registration phone"), 410);
-        }
+        // if ($verification->phone != $request->json("mobile")) {
+        //     return response(Helper::jsonError("Verification phone different than registration phone"), 410);
+        // }
 
         $user->mobile = $request->json("mobile");
         $user->avatar = $request->json("avatar");
@@ -300,19 +354,19 @@ class UserController extends Controller
             $user->about_me = $request->json('aboutMe');
         }
 
-        if ($request->json("mobile") != $user->mobile) {
+        // if ($request->json("mobile") != $user->mobile) {
 
-            $verification = Verification::where('uid', '=', $request->json('uid'))->first();
+        //     $verification = Verification::where('uid', '=', $request->json('uid'))->first();
 
-            if (!$verification) {
-                return response(Helper::jsonError('Verification not found'), 404);
-            }
+        //     if (!$verification) {
+        //         return response(Helper::jsonError('Verification not found'), 404);
+        //     }
 
-            if ($verification->phone != $request->json("mobile")) {
-                return response(Helper::jsonError("Verification phone different than registration phone"), 410);
-            }
+        //     if ($verification->phone != $request->json("mobile")) {
+        //         return response(Helper::jsonError("Verification phone different than registration phone"), 410);
+        //     }
 
-        }
+        // }
 
         $user->mobile = $request->json("mobile");
         $user->address = $request->json("address");

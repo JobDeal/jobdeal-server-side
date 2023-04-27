@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "^0.8.5",
         "barryvdh/laravel-ide-helper": "^2.6",
         "brozot/laravel-fcm": "^1.2",
+        "darkaonline/l5-swagger": "5.7.*",
         "davidpiesse/nova-map": "^0.0.5",
         "fideloper/proxy": "^4.0",
         "firebase/php-jwt": "^5.0",
@@ -36,7 +37,8 @@
         "spatie/laravel-medialibrary": "^7.0.0",
         "tucker-eric/eloquentfilter": "^1.4",
         "twilio/sdk": "^6.16",
-        "vendor/miami": "*"
+        "vendor/miami": "*",
+        "zircote/swagger-php": "2.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

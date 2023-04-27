@@ -3388,23 +3388,100 @@
             /**
      * 
      *
-     * @method static \Illuminate\Database\Query\Builder table(string $table)
-     * @method static \Illuminate\Database\Query\Expression raw($value)
-     * @method static mixed selectOne(string $query, array $bindings = [])
-     * @method static array select(string $query, array $bindings = [])
-     * @method static bool insert(string $query, array $bindings = [])
-     * @method static int update(string $query, array $bindings = [])
-     * @method static int delete(string $query, array $bindings = [])
-     * @method static bool statement(string $query, array $bindings = [])
-     * @method static int affectingStatement(string $query, array $bindings = [])
-     * @method static bool unprepared(string $query)
-     * @method static array prepareBindings(array $bindings)
-     * @method static mixed transaction(\Closure $callback, int $attempts = 1)
-     * @method static void beginTransaction()
-     * @method static void commit()
-     * @method static void rollBack()
-     * @method static int transactionLevel()
-     * @method static array pretend(\Closure $callback)
+     * @see \Illuminate\Encryption\Encrypter
+     */ 
+        class Crypt {
+                    /**
+         * Determine if the given key and cipher combination is valid.
+         *
+         * @param string $key
+         * @param string $cipher
+         * @return bool 
+         * @static 
+         */ 
+        public static function supported($key, $cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
+        }
+                    /**
+         * Create a new encryption key for the given cipher.
+         *
+         * @param string $cipher
+         * @return string 
+         * @static 
+         */ 
+        public static function generateKey($cipher)
+        {
+                        return \Illuminate\Encryption\Encrypter::generateKey($cipher);
+        }
+                    /**
+         * Encrypt the given value.
+         *
+         * @param mixed $value
+         * @param bool $serialize
+         * @return string 
+         * @throws \Illuminate\Contracts\Encryption\EncryptException
+         * @static 
+         */ 
+        public static function encrypt($value, $serialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encrypt($value, $serialize);
+        }
+                    /**
+         * Encrypt a string without serialization.
+         *
+         * @param string $value
+         * @return string 
+         * @static 
+         */ 
+        public static function encryptString($value)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->encryptString($value);
+        }
+                    /**
+         * Decrypt the given value.
+         *
+         * @param mixed $payload
+         * @param bool $unserialize
+         * @return mixed 
+         * @throws \Illuminate\Contracts\Encryption\DecryptException
+         * @static 
+         */ 
+        public static function decrypt($payload, $unserialize = true)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decrypt($payload, $unserialize);
+        }
+                    /**
+         * Decrypt the given string without unserialization.
+         *
+         * @param string $payload
+         * @return string 
+         * @static 
+         */ 
+        public static function decryptString($payload)
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->decryptString($payload);
+        }
+                    /**
+         * Get the encryption key.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getKey()
+        {
+                        /** @var \Illuminate\Encryption\Encrypter $instance */
+                        return $instance->getKey();
+        }
+         
+    }
+            /**
+     * 
+     *
      * @see \Illuminate\Database\DatabaseManager
      * @see \Illuminate\Database\Connection
      */ 
@@ -3525,6 +3602,741 @@
         {
                         /** @var \Illuminate\Database\DatabaseManager $instance */
                         return $instance->getConnections();
+        }
+                    /**
+         * Get a schema builder instance for the connection.
+         *
+         * @return \Illuminate\Database\Schema\MySqlBuilder 
+         * @static 
+         */ 
+        public static function getSchemaBuilder()
+        {
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getSchemaBuilder();
+        }
+                    /**
+         * Bind values to their parameters in the given statement.
+         *
+         * @param \PDOStatement $statement
+         * @param array $bindings
+         * @return void 
+         * @static 
+         */ 
+        public static function bindValues($statement, $bindings)
+        {            //Method inherited from \Illuminate\Database\MySqlConnection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->bindValues($statement, $bindings);
+        }
+                    /**
+         * Set the query grammar to the default implementation.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function useDefaultQueryGrammar()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->useDefaultQueryGrammar();
+        }
+                    /**
+         * Set the schema grammar to the default implementation.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function useDefaultSchemaGrammar()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->useDefaultSchemaGrammar();
+        }
+                    /**
+         * Set the query post processor to the default implementation.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function useDefaultPostProcessor()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->useDefaultPostProcessor();
+        }
+                    /**
+         * Begin a fluent query against a database table.
+         *
+         * @param string $table
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
+         */ 
+        public static function table($table)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->table($table);
+        }
+                    /**
+         * Get a new query builder instance.
+         *
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
+         */ 
+        public static function query()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->query();
+        }
+                    /**
+         * Run a select statement and return a single result.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param bool $useReadPdo
+         * @return mixed 
+         * @static 
+         */ 
+        public static function selectOne($query, $bindings = [], $useReadPdo = true)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->selectOne($query, $bindings, $useReadPdo);
+        }
+                    /**
+         * Run a select statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return array 
+         * @static 
+         */ 
+        public static function selectFromWriteConnection($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->selectFromWriteConnection($query, $bindings);
+        }
+                    /**
+         * Run a select statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param bool $useReadPdo
+         * @return array 
+         * @static 
+         */ 
+        public static function select($query, $bindings = [], $useReadPdo = true)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->select($query, $bindings, $useReadPdo);
+        }
+                    /**
+         * Run a select statement against the database and returns a generator.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param bool $useReadPdo
+         * @return \Generator 
+         * @static 
+         */ 
+        public static function cursor($query, $bindings = [], $useReadPdo = true)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->cursor($query, $bindings, $useReadPdo);
+        }
+                    /**
+         * Run an insert statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return bool 
+         * @static 
+         */ 
+        public static function insert($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->insert($query, $bindings);
+        }
+                    /**
+         * Run an update statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return int 
+         * @static 
+         */ 
+        public static function update($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->update($query, $bindings);
+        }
+                    /**
+         * Run a delete statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return int 
+         * @static 
+         */ 
+        public static function delete($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->delete($query, $bindings);
+        }
+                    /**
+         * Execute an SQL statement and return the boolean result.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return bool 
+         * @static 
+         */ 
+        public static function statement($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->statement($query, $bindings);
+        }
+                    /**
+         * Run an SQL statement and get the number of rows affected.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @return int 
+         * @static 
+         */ 
+        public static function affectingStatement($query, $bindings = [])
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->affectingStatement($query, $bindings);
+        }
+                    /**
+         * Run a raw, unprepared query against the PDO connection.
+         *
+         * @param string $query
+         * @return bool 
+         * @static 
+         */ 
+        public static function unprepared($query)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->unprepared($query);
+        }
+                    /**
+         * Execute the given callback in "dry run" mode.
+         *
+         * @param \Closure $callback
+         * @return array 
+         * @static 
+         */ 
+        public static function pretend($callback)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->pretend($callback);
+        }
+                    /**
+         * Prepare the query bindings for execution.
+         *
+         * @param array $bindings
+         * @return array 
+         * @static 
+         */ 
+        public static function prepareBindings($bindings)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->prepareBindings($bindings);
+        }
+                    /**
+         * Log a query in the connection's query log.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param float|null $time
+         * @return void 
+         * @static 
+         */ 
+        public static function logQuery($query, $bindings, $time = null)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->logQuery($query, $bindings, $time);
+        }
+                    /**
+         * Register a database query listener with the connection.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function listen($callback)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->listen($callback);
+        }
+                    /**
+         * Get a new raw query expression.
+         *
+         * @param mixed $value
+         * @return \Illuminate\Database\Query\Expression 
+         * @static 
+         */ 
+        public static function raw($value)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->raw($value);
+        }
+                    /**
+         * Indicate if any records have been modified.
+         *
+         * @param bool $value
+         * @return void 
+         * @static 
+         */ 
+        public static function recordsHaveBeenModified($value = true)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->recordsHaveBeenModified($value);
+        }
+                    /**
+         * Is Doctrine available?
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function isDoctrineAvailable()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->isDoctrineAvailable();
+        }
+                    /**
+         * Get a Doctrine Schema Column instance.
+         *
+         * @param string $table
+         * @param string $column
+         * @return \Doctrine\DBAL\Schema\Column 
+         * @static 
+         */ 
+        public static function getDoctrineColumn($table, $column)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getDoctrineColumn($table, $column);
+        }
+                    /**
+         * Get the Doctrine DBAL schema manager for the connection.
+         *
+         * @return \Doctrine\DBAL\Schema\AbstractSchemaManager 
+         * @static 
+         */ 
+        public static function getDoctrineSchemaManager()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getDoctrineSchemaManager();
+        }
+                    /**
+         * Get the Doctrine DBAL database connection instance.
+         *
+         * @return \Doctrine\DBAL\Connection 
+         * @static 
+         */ 
+        public static function getDoctrineConnection()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getDoctrineConnection();
+        }
+                    /**
+         * Get the current PDO connection.
+         *
+         * @return \PDO 
+         * @static 
+         */ 
+        public static function getPdo()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getPdo();
+        }
+                    /**
+         * Get the current PDO connection used for reading.
+         *
+         * @return \PDO 
+         * @static 
+         */ 
+        public static function getReadPdo()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getReadPdo();
+        }
+                    /**
+         * Set the PDO connection.
+         *
+         * @param \PDO|\Closure|null $pdo
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setPdo($pdo)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setPdo($pdo);
+        }
+                    /**
+         * Set the PDO connection used for reading.
+         *
+         * @param \PDO|\Closure|null $pdo
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setReadPdo($pdo)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setReadPdo($pdo);
+        }
+                    /**
+         * Set the reconnect instance on the connection.
+         *
+         * @param callable $reconnector
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setReconnector($reconnector)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setReconnector($reconnector);
+        }
+                    /**
+         * Get the database connection name.
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function getName()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getName();
+        }
+                    /**
+         * Get an option from the configuration options.
+         *
+         * @param string|null $option
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getConfig($option = null)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getConfig($option);
+        }
+                    /**
+         * Get the PDO driver name.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDriverName()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getDriverName();
+        }
+                    /**
+         * Get the query grammar used by the connection.
+         *
+         * @return \Illuminate\Database\Query\Grammars\Grammar 
+         * @static 
+         */ 
+        public static function getQueryGrammar()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getQueryGrammar();
+        }
+                    /**
+         * Set the query grammar used by the connection.
+         *
+         * @param \Illuminate\Database\Query\Grammars\Grammar $grammar
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setQueryGrammar($grammar)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setQueryGrammar($grammar);
+        }
+                    /**
+         * Get the schema grammar used by the connection.
+         *
+         * @return \Illuminate\Database\Schema\Grammars\Grammar 
+         * @static 
+         */ 
+        public static function getSchemaGrammar()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getSchemaGrammar();
+        }
+                    /**
+         * Set the schema grammar used by the connection.
+         *
+         * @param \Illuminate\Database\Schema\Grammars\Grammar $grammar
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setSchemaGrammar($grammar)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setSchemaGrammar($grammar);
+        }
+                    /**
+         * Get the query post processor used by the connection.
+         *
+         * @return \Illuminate\Database\Query\Processors\Processor 
+         * @static 
+         */ 
+        public static function getPostProcessor()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getPostProcessor();
+        }
+                    /**
+         * Set the query post processor used by the connection.
+         *
+         * @param \Illuminate\Database\Query\Processors\Processor $processor
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setPostProcessor($processor)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setPostProcessor($processor);
+        }
+                    /**
+         * Get the event dispatcher used by the connection.
+         *
+         * @return \Illuminate\Contracts\Events\Dispatcher 
+         * @static 
+         */ 
+        public static function getEventDispatcher()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getEventDispatcher();
+        }
+                    /**
+         * Set the event dispatcher instance on the connection.
+         *
+         * @param \Illuminate\Contracts\Events\Dispatcher $events
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setEventDispatcher($events)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setEventDispatcher($events);
+        }
+                    /**
+         * Unset the event dispatcher for this connection.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function unsetEventDispatcher()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->unsetEventDispatcher();
+        }
+                    /**
+         * Determine if the connection in a "dry run".
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function pretending()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->pretending();
+        }
+                    /**
+         * Get the connection query log.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getQueryLog()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getQueryLog();
+        }
+                    /**
+         * Clear the query log.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function flushQueryLog()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->flushQueryLog();
+        }
+                    /**
+         * Enable the query log on the connection.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function enableQueryLog()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->enableQueryLog();
+        }
+                    /**
+         * Disable the query log on the connection.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function disableQueryLog()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->disableQueryLog();
+        }
+                    /**
+         * Determine whether we're logging queries.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function logging()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->logging();
+        }
+                    /**
+         * Get the name of the connected database.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getDatabaseName()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getDatabaseName();
+        }
+                    /**
+         * Set the name of the connected database.
+         *
+         * @param string $database
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setDatabaseName($database)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setDatabaseName($database);
+        }
+                    /**
+         * Get the table prefix for the connection.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getTablePrefix()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->getTablePrefix();
+        }
+                    /**
+         * Set the table prefix in use by the connection.
+         *
+         * @param string $prefix
+         * @return \Grimzy\LaravelMysqlSpatial\MysqlConnection 
+         * @static 
+         */ 
+        public static function setTablePrefix($prefix)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->setTablePrefix($prefix);
+        }
+                    /**
+         * Set the table prefix and return the grammar.
+         *
+         * @param \Illuminate\Database\Grammar $grammar
+         * @return \Illuminate\Database\Grammar 
+         * @static 
+         */ 
+        public static function withTablePrefix($grammar)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->withTablePrefix($grammar);
+        }
+                    /**
+         * Register a connection resolver.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function resolverFor($driver, $callback)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        \Grimzy\LaravelMysqlSpatial\MysqlConnection::resolverFor($driver, $callback);
+        }
+                    /**
+         * Get the connection resolver for the given driver.
+         *
+         * @param string $driver
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getResolver($driver)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        return \Grimzy\LaravelMysqlSpatial\MysqlConnection::getResolver($driver);
+        }
+                    /**
+         * Execute a Closure within a transaction.
+         *
+         * @param \Closure $callback
+         * @param int $attempts
+         * @return mixed 
+         * @throws \Exception|\Throwable
+         * @static 
+         */ 
+        public static function transaction($callback, $attempts = 1)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->transaction($callback, $attempts);
+        }
+                    /**
+         * Start a new database transaction.
+         *
+         * @return void 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function beginTransaction()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->beginTransaction();
+        }
+                    /**
+         * Commit the active database transaction.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function commit()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->commit();
+        }
+                    /**
+         * Rollback the active database transaction.
+         *
+         * @param int|null $toLevel
+         * @return void 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function rollBack($toLevel = null)
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        $instance->rollBack($toLevel);
+        }
+                    /**
+         * Get the number of active transactions.
+         *
+         * @return int 
+         * @static 
+         */ 
+        public static function transactionLevel()
+        {            //Method inherited from \Illuminate\Database\Connection         
+                        /** @var \Grimzy\LaravelMysqlSpatial\MysqlConnection $instance */
+                        return $instance->transactionLevel();
         }
          
     }
@@ -6301,6 +7113,41 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
                         return $instance->setConnectionName($name);
+        }
+                    /**
+         * Get the expiration timestamp for an object-based queue handler.
+         *
+         * @param mixed $job
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getJobExpiration($job)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        return $instance->getJobExpiration($job);
+        }
+                    /**
+         * Register a callback to be executed when creating job payloads.
+         *
+         * @param callable $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function createPayloadUsing($callback)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
+        }
+                    /**
+         * Set the IoC container instance.
+         *
+         * @param \Illuminate\Container\Container $container
+         * @return void 
+         * @static 
+         */ 
+        public static function setContainer($container)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        $instance->setContainer($container);
         }
          
     }
@@ -9519,6 +10366,230 @@
             /**
      * 
      *
+     * @see \Illuminate\Database\Schema\Builder
+     */ 
+        class Schema {
+                    /**
+         * Determine if the given table exists.
+         *
+         * @param string $table
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasTable($table)
+        {            //Method inherited from \Illuminate\Database\Schema\MySqlBuilder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->hasTable($table);
+        }
+                    /**
+         * Get the column listing for a given table.
+         *
+         * @param string $table
+         * @return array 
+         * @static 
+         */ 
+        public static function getColumnListing($table)
+        {            //Method inherited from \Illuminate\Database\Schema\MySqlBuilder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->getColumnListing($table);
+        }
+                    /**
+         * Drop all tables from the database.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function dropAllTables()
+        {            //Method inherited from \Illuminate\Database\Schema\MySqlBuilder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->dropAllTables();
+        }
+                    /**
+         * Drop all views from the database.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function dropAllViews()
+        {            //Method inherited from \Illuminate\Database\Schema\MySqlBuilder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->dropAllViews();
+        }
+                    /**
+         * Set the default string length for migrations.
+         *
+         * @param int $length
+         * @return void 
+         * @static 
+         */ 
+        public static function defaultStringLength($length)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        \Grimzy\LaravelMysqlSpatial\Schema\Builder::defaultStringLength($length);
+        }
+                    /**
+         * Determine if the given table has a given column.
+         *
+         * @param string $table
+         * @param string $column
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasColumn($table, $column)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->hasColumn($table, $column);
+        }
+                    /**
+         * Determine if the given table has given columns.
+         *
+         * @param string $table
+         * @param array $columns
+         * @return bool 
+         * @static 
+         */ 
+        public static function hasColumns($table, $columns)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->hasColumns($table, $columns);
+        }
+                    /**
+         * Get the data type for the given column name.
+         *
+         * @param string $table
+         * @param string $column
+         * @return string 
+         * @static 
+         */ 
+        public static function getColumnType($table, $column)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->getColumnType($table, $column);
+        }
+                    /**
+         * Modify a table on the schema.
+         *
+         * @param string $table
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function table($table, $callback)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->table($table, $callback);
+        }
+                    /**
+         * Create a new table on the schema.
+         *
+         * @param string $table
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */ 
+        public static function create($table, $callback)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->create($table, $callback);
+        }
+                    /**
+         * Drop a table from the schema.
+         *
+         * @param string $table
+         * @return void 
+         * @static 
+         */ 
+        public static function drop($table)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->drop($table);
+        }
+                    /**
+         * Drop a table from the schema if it exists.
+         *
+         * @param string $table
+         * @return void 
+         * @static 
+         */ 
+        public static function dropIfExists($table)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->dropIfExists($table);
+        }
+                    /**
+         * Rename a table on the schema.
+         *
+         * @param string $from
+         * @param string $to
+         * @return void 
+         * @static 
+         */ 
+        public static function rename($from, $to)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->rename($from, $to);
+        }
+                    /**
+         * Enable foreign key constraints.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function enableForeignKeyConstraints()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->enableForeignKeyConstraints();
+        }
+                    /**
+         * Disable foreign key constraints.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function disableForeignKeyConstraints()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->disableForeignKeyConstraints();
+        }
+                    /**
+         * Get the database connection instance.
+         *
+         * @return \Illuminate\Database\Connection 
+         * @static 
+         */ 
+        public static function getConnection()
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Set the database connection instance.
+         *
+         * @param \Illuminate\Database\Connection $connection
+         * @return \Grimzy\LaravelMysqlSpatial\Schema\Builder 
+         * @static 
+         */ 
+        public static function setConnection($connection)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        return $instance->setConnection($connection);
+        }
+                    /**
+         * Set the Schema Blueprint resolver callback.
+         *
+         * @param \Closure $resolver
+         * @return void 
+         * @static 
+         */ 
+        public static function blueprintResolver($resolver)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder         
+                        /** @var \Grimzy\LaravelMysqlSpatial\Schema\Builder $instance */
+                        $instance->blueprintResolver($resolver);
+        }
+         
+    }
+            /**
+     * 
+     *
      * @see \Illuminate\Session\SessionManager
      * @see \Illuminate\Session\Store
      */ 
@@ -12678,6 +13749,7 @@ namespace  {
             class Cache extends \Illuminate\Support\Facades\Cache {}
             class Config extends \Illuminate\Support\Facades\Config {}
             class Cookie extends \Illuminate\Support\Facades\Cookie {}
+            class Crypt extends \Illuminate\Support\Facades\Crypt {}
             class DB extends \Illuminate\Support\Facades\DB {}
             class Eloquent extends \Illuminate\Database\Eloquent\Model {             
                 /**
@@ -15235,6 +16307,7 @@ namespace  {
             class Request extends \Illuminate\Support\Facades\Request {}
             class Response extends \Illuminate\Support\Facades\Response {}
             class Route extends \Illuminate\Support\Facades\Route {}
+            class Schema extends \Illuminate\Support\Facades\Schema {}
             class Session extends \Illuminate\Support\Facades\Session {}
             class Storage extends \Illuminate\Support\Facades\Storage {}
             class URL extends \Illuminate\Support\Facades\URL {}
