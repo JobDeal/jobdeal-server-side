@@ -34,6 +34,42 @@ use Intervention\Image\Facades\Image;
 
 class JobController extends Controller
 {
+    /**
+     * @SWG\Post(
+     *     path="/job/add",
+     *     summary="Add a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="name", type="string", description="Job Name"),
+     *             @SWG\Property(property="description", type="string", description="Job description"),
+     *             @SWG\Property(property="price", type="integer", description="Job price"),
+     *             @SWG\Property(property="address", type="string", description="Job address"),
+     *             @SWG\Property(property="categoryId", type="integer", description="Job category"),
+     *             @SWG\Property(property="isBoost", type="boolean"),
+     *             @SWG\Property(property="isDelivery", type="boolean"),
+     *             @SWG\Property(property="latitude", type="string"),
+     *             @SWG\Property(property="longitude", type="string"),
+     *             @SWG\Property(property="expireAt", type="string",),
+     *             @SWG\Property(
+     *                 property="images",
+     *                 type="array",
+     *                 @SWG\Items(
+     *                     @SWG\Property(property="path", type="string"),
+     *                     @SWG\Property(property="position", type="integer")
+     *                 )
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addJob(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
@@ -97,7 +133,44 @@ class JobController extends Controller
         return response(new JobResource($job));
     }
 
-
+    /**
+     * @SWG\Put(
+     *     path="/job/edit",
+     *     summary="Update a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer", description="Job ID"),
+     *             @SWG\Property(property="name", type="string", description="Job Name"),
+     *             @SWG\Property(property="description", type="string", description="Job description"),
+     *             @SWG\Property(property="price", type="integer", description="Job price"),
+     *             @SWG\Property(property="address", type="string", description="Job address"),
+     *             @SWG\Property(property="categoryId", type="integer", description="Job category"),
+     *             @SWG\Property(property="isBoost", type="boolean"),
+     *             @SWG\Property(property="isSpeedy", type="boolean"),
+     *             @SWG\Property(property="isDelivery", type="boolean"),
+     *             @SWG\Property(property="latitude", type="string"),
+     *             @SWG\Property(property="longitude", type="string"),
+     *             @SWG\Property(property="expireAt", type="string",),
+     *             @SWG\Property(
+     *                 property="images",
+     *                 type="array",
+     *                 @SWG\Items(
+     *                     @SWG\Property(property="path", type="string"),
+     *                     @SWG\Property(property="position", type="integer")
+     *                 )
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function editJob(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
@@ -180,7 +253,25 @@ class JobController extends Controller
 
     }
 
-
+    /**
+     * @SWG\Delete(
+     *     path="/job/delete",
+     *     summary="Delete a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function deleteJob(Request $request)
     {
         Job::where("id", "=", $request->json("id"))->delete();
@@ -192,6 +283,39 @@ class JobController extends Controller
         return response("{}");
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/job/report",
+     *     summary="Add report to a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="reportText", type="string"),
+     *             @SWG\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 @SWG\Schema(
+     *                     @SWG\Property(property="id", type="integer")
+     *                 )
+     *             ),
+     *             @SWG\Property(
+     *                 property="job",
+     *                 type="object",
+     *                 @SWG\Schema(
+     *                     @SWG\Property(property="id", type="integer")
+     *                 )
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addReport(Request $request)
     {
         $exists = Report::where("user_id", "=", $request->json("user")["id"])
@@ -211,6 +335,23 @@ class JobController extends Controller
 
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/job/get/{id}",
+     *     summary="Get a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getJobById($id)
     {
         $job = Job::where("id", "=", $id)->first();
@@ -221,6 +362,16 @@ class JobController extends Controller
         return response(new JobResource($job));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/job/recent",
+     *     summary="Get recent jobs",
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getRecentJobs()
     {
         $jobs = Job::where("expire_at", ">=", Carbon::now()->toDateTimeString())
@@ -229,6 +380,47 @@ class JobController extends Controller
         return response(JobResource::collection($jobs));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/job/filter/{type}/{page}",
+     *     summary="Add report to a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="filter", type="string"),
+     *             @SWG\Property(property="sortBy", type="string"),
+     *             @SWG\Property(property="sortDirection", type="string"),
+     *             @SWG\Property(
+     *                 property="currentLocation",
+     *                 type="object",
+     *                 @SWG\Schema(
+     *                     @SWG\Property(property="lat", type="string"),
+     *                     @SWG\Property(property="lng", type="string")
+     *                 )
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function filterJobs(Request $request, $type = 0, $page = 0)
     {
         $sortColumns = ["published" => "created_at", "price" => "price", "expiration" => "expire_at"];
@@ -310,6 +502,32 @@ class JobController extends Controller
         return response($res);
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/job/apply",
+     *     summary="Apply to a job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="price", type="integer"),
+     *             @SWG\Property(
+     *                 property="job",
+     *                 type="object",
+     *                 @SWG\Schema(
+     *                     @SWG\Property(property="id", type="integer")
+     *                 )
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function applyToJob(Request $request)
     {
 

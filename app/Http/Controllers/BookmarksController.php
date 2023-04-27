@@ -13,6 +13,25 @@ use Illuminate\Http\Request;
 
 class BookmarksController extends Controller
 {
+    /**
+     * @SWG\Post(
+     *     path="/bookmark/add",
+     *     summary="Add a bookmark",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addBookmark(Request $request){
         $job = Job::where("id", "=", $request->json("id"))->first();
 
@@ -32,6 +51,25 @@ class BookmarksController extends Controller
         return response(new JobResource($job));
     }
 
+    /**
+     * @SWG\Delete(
+     *     path="/bookmark/remove",
+     *     summary="Remove a bookmark",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function removeBookmark(Request $request){
         $job = Job::where("id", "=", $request->json("id"))->first();
 
@@ -48,6 +86,22 @@ class BookmarksController extends Controller
         return response(new BookmarkResource($bookmark));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/bookmark/all/{page}",
+     *     summary="Get all categories",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function listBookmarks($page = 0){
         $bookmarkIds = Bookmark::where("user_id", "=", \Auth::user()->id)->orderBy("created_at", "DESC")->limit(20)->offset(20 * $page)->get()->pluck("job_id");
         $user = User::where("id", "=", \Auth::user()->id)->first();

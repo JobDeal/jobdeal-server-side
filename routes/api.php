@@ -62,7 +62,7 @@ Route::middleware(['jwtMiddlePass'])->group(function () {
     Route::post('category/add', 'CategoryController@addCategory');
     Route::get('category/get/{id}', 'CategoryController@getCategoryById');
     Route::get('category/all/{root_id}', 'CategoryController@getAllCategories');
-    Route::get('category/delete/{id}', 'CategoryController@deleteCategory');
+    Route::delete('category/delete/{id}', 'CategoryController@deleteCategory');
 
     //DIRECTIONS
     Route::get('directions/address/{lat}/{lng}', 'DirectionsController@getAddressFromLocation');
@@ -91,14 +91,14 @@ Route::middleware(['jwtMiddle'])->group(function () {
 
     //JOB
     Route::post('job/add', 'JobController@addJob');
-    Route::post('job/edit', 'JobController@editJob');
+    Route::put('job/edit', 'JobController@editJob');
     Route::post('job/apply', 'JobController@applyToJob');
     Route::get('job/applicants/{jobId}', 'JobController@getJobApplicants'); // get doers by job id
     Route::get('job/doer/getAll/{page}', 'JobController@getDoerJobs');//deprecated
     Route::get('job/doer/v2/getAll/{type}/{page}', 'JobController@getDoerJobsV2');//get doer jobs
     Route::get('job/buyer/getAll/{userId}/{page}', 'JobController@getBuyerJobs'); // get buyer jobs
     Route::post('job/applicants/choose/{jobId}', 'JobController@chooseJobApplicant');// buyer choose doer for job
-    Route::post('job/delete', 'JobController@deleteJob');
+    Route::delete('job/delete', 'JobController@deleteJob');
     Route::post('job/report', 'JobController@addReport');
 
     //CONVERSATION
@@ -133,7 +133,7 @@ Route::middleware(['jwtMiddle'])->group(function () {
     //BOOKMARKS
     Route::get('bookmark/all/{page}', 'BookmarksController@listBookmarks');
     Route::post('bookmark/add', 'BookmarksController@addBookmark');
-    Route::post('bookmark/remove', 'BookmarksController@removeBookmark');
+    Route::delete('bookmark/remove', 'BookmarksController@removeBookmark');
 
     //WISHLIST
     Route::post('wishlist/update', 'WishlistController@addUpdateWishlist');
