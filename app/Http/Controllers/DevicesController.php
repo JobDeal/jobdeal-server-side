@@ -11,6 +11,29 @@ use Illuminate\Support\Facades\Validator;
 
 class DevicesController extends Controller
 {
+    /**
+     * @SWG\Post(
+     *     path="/user/device/add",
+     *     summary="Add device to the user",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="token", type="string"),
+     *             @SWG\Property(property="type", type="string"),
+     *             @SWG\Property(property="appVersion", type="string"),
+     *             @SWG\Property(property="model", type="string"),
+     *             @SWG\Property(property="osVersion", type="string"),
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addDevice(Request $request){
         $validator = Validator::make($request->json()->all(), [
             'token' => 'required',

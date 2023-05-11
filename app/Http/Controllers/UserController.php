@@ -264,6 +264,23 @@ class UserController extends Controller
         return response($response);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/user/get/{userId}",
+     *     summary="Get a user",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="userId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getUserById($userId){
         $user = User::where("id", "=", $userId)->first();
 
@@ -307,12 +324,62 @@ class UserController extends Controller
         return response(new UserResource($user));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/panel/user/get/{page}",
+     *     summary="Get users list",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getUserList($page){
         $users = User::where("id", ">", 0)->limit(100)->offset($page * 100)->get();
 
         return response(UserResource::collection($users));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/update",
+     *     summary="Update user",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="email", type="string"),
+     *             @SWG\Property(property="password", type="string"),
+     *             @SWG\Property(property="name", type="string"),
+     *             @SWG\Property(property="surname", type="string"),
+     *             @SWG\Property(property="mobile", type="string"),
+     *             @SWG\Property(property="address", type="string"),
+     *             @SWG\Property(property="zip", type="string"),
+     *             @SWG\Property(property="city", type="string"),
+     *             @SWG\Property(property="country", type="string"),
+     *             @SWG\Property(property="locale", type="string"),
+     *             @SWG\Property(property="timezone", type="string"),
+     *             @SWG\Property(property="uid", type="string"),
+     *             @SWG\Property(property="roleId", type="string"),
+     *             @SWG\Property(property="bankId", type="string"),
+     *             @SWG\Property(property="aboutMe", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function updateUser(Request $request){
         $validator = Validator::make($request->json()->all(), [
             'email' => 'max:255|email|required',
@@ -393,6 +460,26 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/password",
+     *     summary="Update password",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="oldPassword", type="string"),
+     *             @SWG\Property(property="newPassword", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function changePassword(Request $request){
         $oldPassword = $request->json('oldPassword');
         $newPassword = $request->json('newPassword');
@@ -412,6 +499,23 @@ class UserController extends Controller
         return response(new UserResource($user));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/verify/{token}",
+     *     summary="Verify email",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="token",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function verifyEmail($token){
         $user = User::where("remember_token", "=", $token)->first();
 
@@ -441,11 +545,46 @@ class UserController extends Controller
         });
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/forgot-password/{token}",
+     *     summary="Web Reset password",
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="token",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function webResetPassword($token){
         $user = User::where('remember_token', $token)->first();
         return view('users.resetpassword')->with(compact('user', 'token'));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/resetpassword",
+     *     summary="Reset password",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="token", type="string"),
+     *             @SWG\Property(property="password", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function resetPassword(Request $request){
         $token = $request->get("token");
         $password = $request->get("password");
@@ -468,6 +607,24 @@ class UserController extends Controller
         return response("OK", 200);
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/password/forgot",
+     *     summary="Forgot password",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="email", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function forgotPassword(Request $request){
         $user = User::where("email", "=", $request->json("email"))->first();
 
@@ -504,6 +661,17 @@ class UserController extends Controller
         return  response($response);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/user/logout",
+     *     summary="Logout",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function logout(Request $request)
     {
         $device = Device::where("user_id", "=", Auth::user()->id)->first();
@@ -516,6 +684,17 @@ class UserController extends Controller
         return response("{}");
     }
 
+    /**
+     * @SWG\Delete(
+     *     path="/user/delete",
+     *     summary="Delete account",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function deleteAccount(Request $request){
         $user = User::where('id', Auth::user()->id)->first();
 
@@ -539,6 +718,24 @@ class UserController extends Controller
 
 
     //----------------------------------BANK ID---------------------------------
+    /**
+     * @SWG\Post(
+     *     path="/bankid/auth",
+     *     summary="Bank ID Auth",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="ip", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function bankIdAuth(){
         //https://appapi2.test.bankid.com/rp/v5
 
@@ -560,6 +757,24 @@ class UserController extends Controller
         return response(new BankIdResource($bankIdRes));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/bankid/collect",
+     *     summary="Bank ID Collect",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="orderRef", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function bankIdCollect(Request $request)
     {
         $client = new Client();
@@ -598,6 +813,25 @@ class UserController extends Controller
         return response(new BankIdCollectResource($bankIdRes));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/verification/send",
+     *     summary="Request Verification",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="mobile", type="string"),
+     *             @SWG\Property(property="locale", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function requestVerification(Request $request) {
 
         $validator = Validator::make($request->json()->all(), [
@@ -646,6 +880,26 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/verification/verify",
+     *     summary="Verify code",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="mobile", type="string"),
+     *             @SWG\Property(property="code", type="string"),
+     *             @SWG\Property(property="id", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function verifyCode(Request $request) {
 
         $validator = Validator::make($request->json()->all(), [
@@ -694,6 +948,27 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/user/location/update",
+     *     summary="Update location",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="lat", type="string"),
+     *             @SWG\Property(property="lng", type="string"),
+     *             @SWG\Property(property="id", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function saveLocation(Request $request) {
 
         if ($request->has('lat') && $request->has('lng')) {

@@ -16,6 +16,29 @@ use Symfony\Component\Debug\Debug;
 
 class DirectionsController extends Controller
 {
+    /**
+     * @SWG\Get(
+     *     path="/directions/address/{lat}/{lng}",
+     *     summary="Get address from location",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="lat",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="lng",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public static function getAddressFromLocation($lat, $lng){
         //retrieveAreas
         //TODO Change API key, this is Convoy key
@@ -38,6 +61,23 @@ class DirectionsController extends Controller
         return response($result);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/directions/location/{address}",
+     *     summary="Get location from address",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="address",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public static function getLocationFromAddress($address){
         //TODO Change API key, this is Convoy key
 

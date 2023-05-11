@@ -297,16 +297,12 @@ class JobController extends Controller
      *             @SWG\Property(
      *                 property="user",
      *                 type="object",
-     *                 @SWG\Schema(
-     *                     @SWG\Property(property="id", type="integer")
-     *                 )
+     *                 @SWG\Property(property="id", type="integer")
      *             ),
      *             @SWG\Property(
      *                 property="job",
      *                 type="object",
-     *                 @SWG\Schema(
-     *                     @SWG\Property(property="id", type="integer")
-     *                 )
+     *                 @SWG\Property(property="id", type="integer")
      *             )
      *         ),
      *     ),
@@ -383,7 +379,7 @@ class JobController extends Controller
     /**
      * @SWG\Post(
      *     path="/job/filter/{type}/{page}",
-     *     summary="Add report to a job",
+     *     summary="Filter jobs",
      *     security={{"bearer_token":{}}},
      *     @SWG\Parameter(
      *         in="path",
@@ -408,10 +404,8 @@ class JobController extends Controller
      *             @SWG\Property(
      *                 property="currentLocation",
      *                 type="object",
-     *                 @SWG\Schema(
-     *                     @SWG\Property(property="lat", type="string"),
-     *                     @SWG\Property(property="lng", type="string")
-     *                 )
+     *                 @SWG\Property(property="lat", type="string"),
+     *                 @SWG\Property(property="lng", type="string")
      *             )
      *         ),
      *     ),
@@ -516,9 +510,7 @@ class JobController extends Controller
      *             @SWG\Property(
      *                 property="job",
      *                 type="object",
-     *                 @SWG\Schema(
-     *                     @SWG\Property(property="id", type="integer")
-     *                 )
+     *                 @SWG\Property(property="id", type="integer")
      *             )
      *         ),
      *     ),
@@ -568,6 +560,23 @@ class JobController extends Controller
         return response(new JobResource($job));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/job/applicants/{jobId}",
+     *     summary="Get the applicants of the job",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="jobId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getJobApplicants($id)
     {
         $job = Job::where("id", "=", $id)->first();
@@ -583,6 +592,41 @@ class JobController extends Controller
         return response(ApplicantResource::collection($applicants));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/job/applicants/choose/{jobId}",
+     *     summary="Choose applicant",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="jobId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer", description="User ID"),
+     *             @SWG\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer", description="User ID")
+     *             ),
+     *             @SWG\Property(
+     *                 property="helpOnTheWay",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function chooseJobApplicant(Request $request, $jobId)
     {
         $job = Job::where("id", "=", $jobId)->first();
@@ -637,6 +681,28 @@ class JobController extends Controller
         return response(new JobResource($job));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/job/buyer/getAll/{userId}/{page}",
+     *     summary="Get buyer jobs",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="userId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getBuyerJobs($userId, $page = 0)
     {
 
@@ -647,6 +713,22 @@ class JobController extends Controller
         return response(JobResource::collection($userJobs));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/job/doer/getAll/{page}",
+     *     summary="Get doer jobs",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getDoerJobs($page = 0)// deprecated
     {
 
@@ -656,6 +738,27 @@ class JobController extends Controller
         return response(JobResource::collection($jobs));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="job/doer/v2/getAll/{type}/{page}",
+     *     summary="Get doer jobs",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getDoerJobsV2($type = 1, $page = 0)
     { // get jobs where user/doer is appyed
 

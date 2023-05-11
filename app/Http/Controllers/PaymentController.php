@@ -32,7 +32,6 @@ use Klarna\Rest\OrderManagement as KlarnaManagement;
 
 class PaymentController extends Controller
 {
-
     public function getPaymentById($id)
     {
         $payment = Payment::where("id", "=", $id)->first();
@@ -47,6 +46,32 @@ class PaymentController extends Controller
     }
 
     /*---------------------------------SWISH--------------------------------------*/
+
+    /**
+     * @SWG\Post(
+     *     path="/payment/swish/pay/job/{type}",
+     *     summary="Pay job with Swish",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer")
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function swishJobPay(Request $request, $type)
     {
         $payment = new Payment();
@@ -145,6 +170,36 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/swish/pay/choose",
+     *     summary="Choose swish pay",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="price", type="string"),
+     *             @SWG\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function swishChoosePay(Request $request)
     {//request is applicant resource
 
@@ -222,6 +277,33 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/swish/callback",
+     *     summary="Choose swish pay",
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="status", type="string"),
+     *             @SWG\Property(property="payeePaymentReference", type="string"),
+     *             @SWG\Property(property="message", type="string"),
+     *             @SWG\Property(property="errorMessage", type="string")
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function swishCallback(Request $request)
     {
         Log::debug("SWISH CALLBACK: " . json_encode($request->json()->all()));
@@ -275,6 +357,23 @@ class PaymentController extends Controller
         return response("OK");
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/payment/swish/complete/{orderId}",
+     *     summary="Choose swish pay",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="orderId",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function swishComplete($orderId)
     {
         $client = new Client();
@@ -348,6 +447,31 @@ class PaymentController extends Controller
     /*---------------------------------KLARNA--------------------------------------*/
 
     //method for pay boost, speedy, boosted speedy, list doers
+    /**
+     * @SWG\Post(
+     *     path="/payment/klarna/pay/job/{type}",
+     *     summary="Pay job with Klarna",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="id", type="integer")
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaJobPay(Request $request, $type)
     {
         $payment = new Payment();
@@ -420,6 +544,35 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/klarna/pay/choose",
+     *     summary="Choose klarna pay",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="price", type="string"),
+     *             @SWG\Property(
+     *                 property="job",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             ),
+     *             @SWG\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaChoosePay(Request $request)
     {
         $job = Job::where("id", "=", $request->json("job")["id"])->first();
@@ -479,6 +632,17 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/klarna/pay/subscribe",
+     *     summary="Subscribe klarna pay",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaSubscriptionPay(Request $request)
     {
         $user = User::where("id", "=", Auth::user()->id)->first();
@@ -574,6 +738,23 @@ class PaymentController extends Controller
         }
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/payment/klarna/complete/{orderId}",
+     *     summary="Choose klarna pay",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="orderId",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaComplete($orderId)
     {
         $payment = Payment::where("ref_id", "=", $orderId)->first();
@@ -699,6 +880,17 @@ class PaymentController extends Controller
 
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/klarna/subscribe/cancel",
+     *     summary="Cancel klarna subscription",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function cancelSubscription(){
         $user = User::where("id", "=", Auth::user()->id)->first();
 
@@ -725,6 +917,23 @@ class PaymentController extends Controller
         Log::debug("Klarna Checkout Event: " . $order_id);
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/payment/klarna/push/{order_id}",
+     *     summary="Push klarna event",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="order_id",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaPushEvent(Request $request, $order_id)
     {
         Log::debug("Klarna Push Event: " . $order_id);
@@ -783,6 +992,23 @@ class PaymentController extends Controller
         return response("OK", 200);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/payment/klarna/confirmation/{order_id}",
+     *     summary="Cancel klarna event",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="order_id",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function klarnaConfirmationEvent($order_id)
     {
         Log::debug("Klarna Confirmation Event: " . $order_id);
@@ -918,6 +1144,35 @@ class PaymentController extends Controller
         var_dump("OK");
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/price/calculate",
+     *     summary="Calculate price",
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="type", type="string"),
+     *             @SWG\Property(
+     *                 property="applicant",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             ),
+     *             @SWG\Property(
+     *                 property="job",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer"),
+     *                 @SWG\Property(property="price", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function calculatePrice(Request $request) {
 
         $type = $request->json('type');

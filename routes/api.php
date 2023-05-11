@@ -71,7 +71,7 @@ Route::middleware(['jwtMiddlePass'])->group(function () {
 
 Route::middleware(['jwtMiddle'])->group(function () {
     Route::get('user/logout', 'UserController@logout');
-    Route::post('user/delete', 'UserController@deleteAccount');
+    Route::delete('user/delete', 'UserController@deleteAccount');
 
     //DEVICE
     Route::post('user/device/add', 'DevicesController@addDevice');
@@ -126,7 +126,7 @@ Route::middleware(['jwtMiddle'])->group(function () {
     Route::get('notification/get/{id}', 'NotificationController@getNotificationById');
     Route::get('notification/all/{page}', 'NotificationController@getAllNotifications');
     Route::get('notification/types/{type}/{page}', 'NotificationController@getSeparatedNotifications');
-    Route::get('notification/delete/{id}', 'NotificationController@deleteNotification');
+    Route::delete('notification/delete/{id}', 'NotificationController@deleteNotification');
     Route::get('notification/unread', 'NotificationController@getUnreadCount');
     Route::get('notification/read/{id}', 'NotificationController@readNotification');
 
