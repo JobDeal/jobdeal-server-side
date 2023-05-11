@@ -15,6 +15,23 @@ class NotificationController extends Controller
     private const NOTIFICATION_TYPE_DOER = 0;
     private const NOTIFICATION_TYPE_BUYER = 1;
 
+    /**
+     * @SWG\Get(
+     *     path="/notification/get/{id}",
+     *     summary="Get a notification",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getNotificationById($id){
         $notification = Notification::where("id", "=", $id)->first();
 
@@ -24,6 +41,23 @@ class NotificationController extends Controller
         return response(new NotificationResource($notification));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/notification/app/{page}",
+     *     summary="Get all notification",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getAllNotifications($page = 0){
         $notifications = Notification::where("user_id", "=", Auth::user()->id)->limit(20)->offset($page * 20)->orderBy("id", "DESC")->get();
 
@@ -32,6 +66,23 @@ class NotificationController extends Controller
         return response(NotificationResource::collection($notifications));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/notification/read/{id}",
+     *     summary="Read notification",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function readNotification($id){
         $notification = Notification::where('id', $id)->first();
 
@@ -43,6 +94,29 @@ class NotificationController extends Controller
         return response("{}", 200, ["Content-Type" => "application/json"]);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/notification/types/{type}/{page}",
+     *     summary="Get Separated Notifications",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="type",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getSeparatedNotifications($type, $page = 0){
 
         switch ($type) {
@@ -60,6 +134,23 @@ class NotificationController extends Controller
         return response(NotificationResource::collection($notifications));
     }
 
+    /**
+     * @SWG\Delete(
+     *     path="/notification/delete/{id}",
+     *     summary="Delete a notification",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function deleteNotification($id){
         $notification = Notification::where("id", "=", $id)->first();
 
@@ -75,6 +166,17 @@ class NotificationController extends Controller
         return response(new NotificationResource($res));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/notification/unread",
+     *     summary="Get unread count",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getUnreadCount(){
         $notificationDoerCount = Notification::where('user_id', '=', Auth::user()->id)
             ->whereIn('type', [NotificationConst::BuyerAccepted, NotificationConst::RateBuyer, NotificationConst::WishlistJob])

@@ -21,7 +21,41 @@ use Illuminate\Support\Facades\Validator;
 
 class RateController extends Controller
 {
-
+    /**
+     * @SWG\Post(
+     *     path="/rate/add",
+     *     summary="Add a rate",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="rate", type="string"),
+     *             @SWG\Property(property="comment", type="string"),
+     *             @SWG\Property(
+     *                 property="buyer",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             ),
+     *             @SWG\Property(
+     *                 property="job",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             ),
+     *             @SWG\Property(
+     *                 property="doer",
+     *                 type="object",
+     *                 @SWG\Property(property="id", type="integer")
+     *             )
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addRate(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
@@ -104,6 +138,29 @@ class RateController extends Controller
         return response(new RateResource($rate));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/rate/byBuyerId/{userId}/{page}",
+     *     summary="Get user rates",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="userId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getRateByBuyerId($buyerId, $page)
     {
         $rates = Rate::where("buyer_id", "=", $buyerId)->limit(20)->offset($page * 20)->get();
@@ -111,6 +168,29 @@ class RateController extends Controller
         return response(RateResource::collection($rates));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/rate/byDoerId/{userId}/{page}",
+     *     summary="Get doer rates",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="userId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getRateByDoerId($buyerId, $page)
     {
         $rates = Rate::where("doer_id", "=", $buyerId)->limit(20)->offset($page * 20)->get();

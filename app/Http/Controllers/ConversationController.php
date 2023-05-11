@@ -18,6 +18,17 @@ use Illuminate\Support\Facades\Validator;
 
 class ConversationController extends Controller
 {
+    /**
+     * @SWG\Get(
+     *     path="/conversation/user/unread",
+     *     summary="Get unread conversations",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getUnreadConversation(){
         $unread = Participant::where("user_id", Auth::user()->id)
             ->where("unread", ">", 0)
@@ -26,6 +37,23 @@ class ConversationController extends Controller
         return $unread;
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/conversation/all/{page}",
+     *     summary="Get conversations",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getConversation($page = 0){
         $userId = Auth::user()->id;
 
@@ -38,6 +66,29 @@ class ConversationController extends Controller
         return response(ConversationResource::collection($conversations));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/conversation/message/{conversationId}/{page}",
+     *     summary="Get messages by conversation Id",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="conversationId",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="page",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function showConversation($conversationId, $page = 0){
         $user = User::find(Auth::user()->id);
 
@@ -59,6 +110,28 @@ class ConversationController extends Controller
         return response(MessageResource::collection($messages));
     }
 
+
+    /**
+     * @SWG\Post(
+     *     path="/conversation/message/add",
+     *     summary="Add message to the conversation",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         required=true,
+     *         @SWG\Schema(
+     *             @SWG\Property(property="conversationId", type="integer"),
+     *             @SWG\Property(property="conversationName", type="string"),
+     *             @SWG\Property(property="body", type="string")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function addMessage(Request $request){
         $validator = Validator::make($request->json()->all(), [
             //'receiverId' => 'required'
@@ -144,6 +217,23 @@ class ConversationController extends Controller
         return response(new MessageResource($message));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/conversation/message/{id}",
+     *     summary="Get message by Id",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getMessageById($id){
         $message = Message::where("id", "=", $id)->first();
 
@@ -161,6 +251,27 @@ class ConversationController extends Controller
         return response(new MessageResource($message));
     }
 
+    /**
+     * @SWG\Post(
+     *     path="/conversation/message/get",
+     *     summary="Get message by Ids",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="body",
+     *         name="body",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(
+     *                 type="integer"
+     *             )
+     *         )
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getMessagesByIds(Request $request){
         $messages = Message::whereIn("id", $request->all())->orderBy("created_at", "DESC")->get();
 
@@ -178,6 +289,23 @@ class ConversationController extends Controller
         return response(MessageResource::collection($messages));
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/conversation/get/{id}",
+     *     summary="Get conversation by Id",
+     *     security={{"bearer_token":{}}},
+     *     @SWG\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
+     */
     public function getConversationById($id){
         $conversation = Conversation::where("id", "=", $id)->first();
 
