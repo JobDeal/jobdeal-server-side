@@ -20,8 +20,8 @@ use App\Verification;
 use App\Wishlist;
 use Carbon\Carbon;
 
-//use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,22 +38,22 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/login",
      *     summary="Login, generate auth token",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="password", type="string"),
-     *             @SWG\Property(property="country", type="string"),
-     *             @SWG\Property(property="locale", type="string"),
-     *             @SWG\Property(property="timezone", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="country", type="string"),
+     *                 @OA\Property(property="locale", type="string"),
+     *                 @OA\Property(property="timezone", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -136,32 +136,32 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/register",
      *     summary="Register",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="password", type="string"),
-     *             @SWG\Property(property="name", type="string"),
-     *             @SWG\Property(property="surname", type="string"),
-     *             @SWG\Property(property="mobile", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="zip", type="string"),
-     *             @SWG\Property(property="city", type="string"),
-     *             @SWG\Property(property="country", type="string"),
-     *             @SWG\Property(property="locale", type="string"),
-     *             @SWG\Property(property="timezone", type="string"),
-     *             @SWG\Property(property="uid", type="string"),
-     *             @SWG\Property(property="roleId", type="string"),
-     *             @SWG\Property(property="bankId", type="string"),
-     *             @SWG\Property(property="aboutMe", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="surname", type="string"),
+     *                 @OA\Property(property="mobile", type="string"),
+     *                 @OA\Property(property="address", type="string"),
+     *                 @OA\Property(property="zip", type="string"),
+     *                 @OA\Property(property="city", type="string"),
+     *                 @OA\Property(property="country", type="string"),
+     *                 @OA\Property(property="locale", type="string"),
+     *                 @OA\Property(property="timezone", type="string"),
+     *                 @OA\Property(property="uid", type="string"),
+     *                 @OA\Property(property="roleId", type="string"),
+     *                 @OA\Property(property="bankId", type="string"),
+     *                 @OA\Property(property="aboutMe", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -265,17 +265,14 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="/user/get/{userId}",
      *     summary="Get a user",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="userId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/userId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -325,17 +322,14 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="/panel/user/get/{page}",
      *     summary="Get users list",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -348,33 +342,33 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/update",
      *     summary="Update user",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string"),
-     *             @SWG\Property(property="password", type="string"),
-     *             @SWG\Property(property="name", type="string"),
-     *             @SWG\Property(property="surname", type="string"),
-     *             @SWG\Property(property="mobile", type="string"),
-     *             @SWG\Property(property="address", type="string"),
-     *             @SWG\Property(property="zip", type="string"),
-     *             @SWG\Property(property="city", type="string"),
-     *             @SWG\Property(property="country", type="string"),
-     *             @SWG\Property(property="locale", type="string"),
-     *             @SWG\Property(property="timezone", type="string"),
-     *             @SWG\Property(property="uid", type="string"),
-     *             @SWG\Property(property="roleId", type="string"),
-     *             @SWG\Property(property="bankId", type="string"),
-     *             @SWG\Property(property="aboutMe", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="password", type="string"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="surname", type="string"),
+     *                 @OA\Property(property="mobile", type="string"),
+     *                 @OA\Property(property="address", type="string"),
+     *                 @OA\Property(property="zip", type="string"),
+     *                 @OA\Property(property="city", type="string"),
+     *                 @OA\Property(property="country", type="string"),
+     *                 @OA\Property(property="locale", type="string"),
+     *                 @OA\Property(property="timezone", type="string"),
+     *                 @OA\Property(property="uid", type="string"),
+     *                 @OA\Property(property="roleId", type="string"),
+     *                 @OA\Property(property="bankId", type="string"),
+     *                 @OA\Property(property="aboutMe", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -461,20 +455,20 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/password",
      *     summary="Update password",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="oldPassword", type="string"),
-     *             @SWG\Property(property="newPassword", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="oldPassword", type="string"),
+     *                 @OA\Property(property="newPassword", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -500,17 +494,21 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="token",
+     *    parameter="token"
+     * )
+     * @OA\Post(
      *     path="/user/verify/{token}",
      *     summary="Verify email",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="token",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/token"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -546,16 +544,13 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/forgot-password/{token}",
      *     summary="Web Reset password",
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="token",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/token"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -567,19 +562,19 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/resetpassword",
      *     summary="Reset password",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="token", type="string"),
-     *             @SWG\Property(property="password", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="token", type="string"),
+     *                 @OA\Property(property="password", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -608,18 +603,18 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/password/forgot",
      *     summary="Forgot password",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="email", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="email", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -662,11 +657,11 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="/user/logout",
      *     summary="Logout",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -685,11 +680,11 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Delete(
+     * @OA\Delete(
      *     path="/user/delete",
      *     summary="Delete account",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -719,18 +714,18 @@ class UserController extends Controller
 
     //----------------------------------BANK ID---------------------------------
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/bankid/auth",
      *     summary="Bank ID Auth",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="ip", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="ip", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -758,18 +753,18 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/bankid/collect",
      *     summary="Bank ID Collect",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="orderRef", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="orderRef", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -814,19 +809,19 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/verification/send",
      *     summary="Request Verification",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="mobile", type="string"),
-     *             @SWG\Property(property="locale", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="mobile", type="string"),
+     *                 @OA\Property(property="locale", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -881,20 +876,20 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/verification/verify",
      *     summary="Verify code",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="mobile", type="string"),
-     *             @SWG\Property(property="code", type="string"),
-     *             @SWG\Property(property="id", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="mobile", type="string"),
+     *                 @OA\Property(property="code", type="string"),
+     *                 @OA\Property(property="id", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -949,21 +944,21 @@ class UserController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/user/location/update",
      *     summary="Update location",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="lat", type="string"),
-     *             @SWG\Property(property="lng", type="string"),
-     *             @SWG\Property(property="id", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="lat", type="string"),
+     *                 @OA\Property(property="lng", type="string"),
+     *                 @OA\Property(property="id", type="string")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

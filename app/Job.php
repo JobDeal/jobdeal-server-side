@@ -7,26 +7,27 @@ use App\Http\Resources\ImageResource;
 use App\ModelFilters\JobFilter;
 use Carbon\Carbon;
 use EloquentFilter\Filterable;
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Mockery\Exception;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 
 class Job extends Model implements HasMedia
 {
-    use HasMediaTrait, SpatialTrait, Filterable;
+    use InteractsWithMedia, HasSpatial, Filterable;
 
     protected $spatialFields = ['location'];
     protected $appends = ['bidCount', 'isBookmark', 'isApplied', 'mainImage', 'allImages', 'choosedCount',
         'isChoosed', 'isExpired'];
     protected $casts = [
-        'expire_at' => 'datetime'
+        'expire_at' => 'datetime',
+        'location' => Point::class,
     ];
 
 //    public function getLongitudeAttribute()

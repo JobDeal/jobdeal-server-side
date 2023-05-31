@@ -8,7 +8,6 @@ use App\Http\Resources\JobLiteResource;
 use App\Job;
 use App\Notification;
 use App\Wishlist;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -68,18 +67,18 @@ class CheckWishlist implements ShouldQueue
                 }
             }
 
-            $lat = $wishlist->location->getLat();
-            $lng = $wishlist->location->getLng();
+            $lat = $wishlist->location->latitude;
+            $lng = $wishlist->location->longitude;
 
             if($lat > 0 && $lng > 0 && $wishlist->from_distance > 0){
-                if(Helper::getDistance($lat, $lng, $this->jobdeal->location->getLat(), $this->jobdeal->location->getLng()) < $wishlist->from_distance){
+                if(Helper::getDistance($lat, $lng, $this->jobdeal->location->latitude, $this->jobdeal->location->longitude) < $wishlist->from_distance){
                     $isRequirementsOk = false;
                     //\Log::info("Distance from not OK!");
                 }
             }
 
             if($lat > 0 && $lng > 0 && $wishlist->to_distance < 100001){ //less that 100km otherwise don't look to distance
-                if(Helper::getDistance($lat, $lng, $this->jobdeal->location->getLat(), $this->jobdeal->location->getLng()) > $wishlist->to_distance){
+                if(Helper::getDistance($lat, $lng, $this->jobdeal->location->latitude, $this->jobdeal->location->longitude) > $wishlist->to_distance){
                     $isRequirementsOk = false;
                     //\Log::info("Distance to not OK!");
                 }

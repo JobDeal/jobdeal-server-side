@@ -2,18 +2,20 @@
 
 namespace App;
 
-use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
+use MatanYadaev\EloquentSpatial\Objects\Point;
+use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wishlist extends Model
 {
-    use SoftDeletes, SpatialTrait;
+    use SoftDeletes, HasSpatial;
 
     protected $primaryKey = "user_id";
     protected $table = "wishlists";
     protected $casts = [
-        'categories' => 'array'
+        'categories' => 'array',
+        'location' => Point::class,
     ];
     protected $spatialFields = ['location'];
     protected $guarded = [];
