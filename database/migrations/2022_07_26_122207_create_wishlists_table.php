@@ -20,7 +20,7 @@ class CreateWishlistsTable extends Migration {
 			$table->float('to_price', 10, 0)->nullable();
 			$table->integer('from_distance')->nullable();
 			$table->integer('to_distance')->nullable();
-			$table->string('location')->index('geometry_idenx');
+			$table->point('location')->nullable();
 			$table->text('categories');
 			$table->string('country', 3)->index('country_wishlist_index');
 			$table->boolean('is_active')->default(1);

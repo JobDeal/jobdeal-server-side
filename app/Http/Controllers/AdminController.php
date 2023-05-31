@@ -6,6 +6,7 @@ use App\Admin;
 use App\Http\Helper;
 use App\Http\Resources\UserResource;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

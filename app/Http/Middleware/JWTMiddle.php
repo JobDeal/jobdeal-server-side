@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Closure;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +37,7 @@ class JWTMiddle
             return response(Helper::jsonError("Authorization missing!"), 401, []);
 
         JWT::$leeway = 180 * 60 * 24;
-        $decoded = JWT::decode($token, $key, array('HS256'));
+        $decoded = JWT::decode($token, new Key($key, 'HS256'));
 
         $expire = Carbon::createFromTimestamp($decoded->expirationDate / 1000);
         $now = Carbon::now();

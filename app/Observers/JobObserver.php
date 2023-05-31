@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Job;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
 use Illuminate\Support\Facades\Log;
 
 class JobObserver

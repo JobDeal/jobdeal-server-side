@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:8.2-apache
 
 ARG USERNAME
 ARG USER_ID
@@ -8,7 +8,7 @@ RUN useradd -u ${USER_ID} ${USERNAME} --create-home --groups www-data,root
 
 #Install GIT, GnuPG, Python2, NodeJS and NPM
 RUN apt-get update && apt-get install -y git gnupg && \
-    curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y python2 nodejs tldr
 
 #Add Laravel necessary php extensions
@@ -20,8 +20,9 @@ RUN apt-get install -y \
     libpng-dev \
     libzip-dev \
     && docker-php-ext-install -j$(nproc) zip mysqli pdo_mysql \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
+RUN docker-php-ext-install exif
 # Create working directory
 RUN mkdir -p /var/www/${USERNAME}
 RUN chown -R ${USERNAME}:${USERNAME} /var/www/${USERNAME}

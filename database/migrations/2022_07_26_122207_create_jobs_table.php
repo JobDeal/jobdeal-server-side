@@ -29,7 +29,7 @@ class CreateJobsTable extends Migration {
 			$table->boolean('is_underbidder_listed')->default(0);
 			$table->boolean('is_rate_sent')->default(0);
 			$table->string('location_string')->nullable();
-			$table->geometry('location');
+			$table->point('location')->nullable();
 			$table->boolean('is_active')->default(1)->index('is_active');
 			$table->boolean('is_offensive')->nullable()->default(0);
 			$table->string('country', 5)->index('country_index');

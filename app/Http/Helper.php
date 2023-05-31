@@ -358,8 +358,8 @@ class Helper
 
         if ($wishlist) {
 
-            $response["currentLocation"]["lat"] = (double)$wishlist->location->getLat();
-            $response["currentLocation"]["lng"] = (double)$wishlist->location->getLng();
+            $response["currentLocation"]["lat"] = (double)$wishlist->location->latitude;
+            $response["currentLocation"]["lng"] = (double)$wishlist->location->longitude;
             $response["filter"]["fromPrice"] = (float)$wishlist->from_price;
             $response["filter"]["toPrice"] = (float)$wishlist->to_price;
             $response["filter"]["fromDistance"] = (float)$wishlist->from_distance;

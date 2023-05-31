@@ -22,7 +22,7 @@ use App\Notification;
 use App\Report;
 use App\User;
 use Carbon\Carbon;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,36 +35,36 @@ use Intervention\Image\Facades\Image;
 class JobController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/job/add",
      *     summary="Add a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="name", type="string", description="Job Name"),
-     *             @SWG\Property(property="description", type="string", description="Job description"),
-     *             @SWG\Property(property="price", type="integer", description="Job price"),
-     *             @SWG\Property(property="address", type="string", description="Job address"),
-     *             @SWG\Property(property="categoryId", type="integer", description="Job category"),
-     *             @SWG\Property(property="isBoost", type="boolean"),
-     *             @SWG\Property(property="isDelivery", type="boolean"),
-     *             @SWG\Property(property="latitude", type="string"),
-     *             @SWG\Property(property="longitude", type="string"),
-     *             @SWG\Property(property="expireAt", type="string",),
-     *             @SWG\Property(
-     *                 property="images",
-     *                 type="array",
-     *                 @SWG\Items(
-     *                     @SWG\Property(property="path", type="string"),
-     *                     @SWG\Property(property="position", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="name", type="string", description="Job Name"),
+     *                 @OA\Property(property="description", type="string", description="Job description"),
+     *                 @OA\Property(property="price", type="integer", description="Job price"),
+     *                 @OA\Property(property="address", type="string", description="Job address"),
+     *                 @OA\Property(property="categoryId", type="integer", description="Job category"),
+     *                 @OA\Property(property="isBoost", type="boolean"),
+     *                 @OA\Property(property="isDelivery", type="boolean"),
+     *                 @OA\Property(property="latitude", type="string"),
+     *                 @OA\Property(property="longitude", type="string"),
+     *                 @OA\Property(property="expireAt", type="string",),
+     *                 @OA\Property(
+     *                     property="images",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="path", type="string"),
+     *                         @OA\Property(property="position", type="integer")
+     *                     )
      *                 )
-     *             )
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -134,38 +134,38 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Put(
+     * @OA\Put(
      *     path="/job/edit",
      *     summary="Update a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer", description="Job ID"),
-     *             @SWG\Property(property="name", type="string", description="Job Name"),
-     *             @SWG\Property(property="description", type="string", description="Job description"),
-     *             @SWG\Property(property="price", type="integer", description="Job price"),
-     *             @SWG\Property(property="address", type="string", description="Job address"),
-     *             @SWG\Property(property="categoryId", type="integer", description="Job category"),
-     *             @SWG\Property(property="isBoost", type="boolean"),
-     *             @SWG\Property(property="isSpeedy", type="boolean"),
-     *             @SWG\Property(property="isDelivery", type="boolean"),
-     *             @SWG\Property(property="latitude", type="string"),
-     *             @SWG\Property(property="longitude", type="string"),
-     *             @SWG\Property(property="expireAt", type="string",),
-     *             @SWG\Property(
-     *                 property="images",
-     *                 type="array",
-     *                 @SWG\Items(
-     *                     @SWG\Property(property="path", type="string"),
-     *                     @SWG\Property(property="position", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer", description="Job ID"),
+     *                 @OA\Property(property="name", type="string", description="Job Name"),
+     *                 @OA\Property(property="description", type="string", description="Job description"),
+     *                 @OA\Property(property="price", type="integer", description="Job price"),
+     *                 @OA\Property(property="address", type="string", description="Job address"),
+     *                 @OA\Property(property="categoryId", type="integer", description="Job category"),
+     *                 @OA\Property(property="isBoost", type="boolean"),
+     *                 @OA\Property(property="isSpeedy", type="boolean"),
+     *                 @OA\Property(property="isDelivery", type="boolean"),
+     *                 @OA\Property(property="latitude", type="string"),
+     *                 @OA\Property(property="longitude", type="string"),
+     *                 @OA\Property(property="expireAt", type="string",),
+     *                 @OA\Property(
+     *                     property="images",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         @OA\Property(property="path", type="string"),
+     *                         @OA\Property(property="position", type="integer")
+     *                     )
      *                 )
-     *             )
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -254,19 +254,19 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Delete(
+     * @OA\Delete(
      *     path="/job/delete",
      *     summary="Delete a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer", description="Job ID")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -284,29 +284,29 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/job/report",
      *     summary="Add report to a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="reportText", type="string"),
-     *             @SWG\Property(
-     *                 property="user",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="reportText", type="string"),
+     *                 @OA\Property(
+     *                     property="user",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 )
      *             ),
-     *             @SWG\Property(
-     *                 property="job",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
-     *             )
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -332,17 +332,21 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="id",
+     *    parameter="job_id"
+     * )
+     * @OA\Get(
      *     path="/job/get/{id}",
      *     summary="Get a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/job_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -359,10 +363,10 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="/job/recent",
      *     summary="Get recent jobs",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -377,39 +381,47 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Parameter(
+     *     @OA\Schema(type="integer"),
+     *     in="path",
+     *     name="type",
+     *     required=true,
+     *     parameter="type"
+     * )
+     * @OA\Parameter(
+     *     @OA\Schema(type="integer"),
+     *     in="path",
+     *     name="page",
+     *     required=true,
+     *     parameter="page"
+     * )
+     * @OA\Post(
      *     path="/job/filter/{type}/{page}",
      *     summary="Filter jobs",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/type"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="filter", type="string"),
-     *             @SWG\Property(property="sortBy", type="string"),
-     *             @SWG\Property(property="sortDirection", type="string"),
-     *             @SWG\Property(
-     *                 property="currentLocation",
-     *                 type="object",
-     *                 @SWG\Property(property="lat", type="string"),
-     *                 @SWG\Property(property="lng", type="string")
-     *             )
-     *         ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="filter", type="string"),
+     *                 @OA\Property(property="sortBy", type="string"),
+     *                 @OA\Property(property="sortDirection", type="string"),
+     *                 @OA\Property(
+     *                     property="currentLocation",
+     *                     type="object",
+     *                     @OA\Property(property="lat", type="string"),
+     *                     @OA\Property(property="lng", type="string")
+     *                 )
+     *             ),
+     *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -497,24 +509,24 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/job/apply",
      *     summary="Apply to a job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="price", type="integer"),
-     *             @SWG\Property(
-     *                 property="job",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="price", type="integer"),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 )
      *             )
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -561,17 +573,21 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="string"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="jobId",
+     *    parameter="jobId"
+     * )
+     * @OA\Get(
      *     path="/job/applicants/{jobId}",
      *     summary="Get the applicants of the job",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="jobId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/jobId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -593,35 +609,32 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
      *     path="/job/applicants/choose/{jobId}",
      *     summary="Choose applicant",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="jobId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/jobId"
      *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer", description="User ID"),
-     *             @SWG\Property(
-     *                 property="user",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer", description="User ID")
-     *             ),
-     *             @SWG\Property(
-     *                 property="helpOnTheWay",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer", description="User ID"),
+     *                 @OA\Property(
+     *                     property="user",
+     *                     type="object",
+     *                    @OA\Property(property="id", type="integer", description="User ID")
+     *                ),
+     *                @OA\Property(
+     *                     property="helpOnTheWay",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                )
      *             )
-     *         ),
+     *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -682,22 +695,24 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="userId",
+     *    parameter="userId"
+     * )
+     * @OA\Get(
      *     path="/job/buyer/getAll/{userId}/{page}",
      *     summary="Get buyer jobs",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="userId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/userId"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -714,16 +729,14 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="/job/doer/getAll/{page}",
      *     summary="Get doer jobs",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -739,21 +752,17 @@ class JobController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
      *     path="job/doer/v2/getAll/{type}/{page}",
      *     summary="Get doer jobs",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/type"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

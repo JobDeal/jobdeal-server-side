@@ -2,7 +2,7 @@
 
 use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Illuminate\Support\Facades\Auth;
 
 class JobFilter extends ModelFilter

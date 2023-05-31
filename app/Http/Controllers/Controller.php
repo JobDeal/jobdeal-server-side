@@ -15,19 +15,19 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
- * @SWG\Swagger(
+ * @OA\OpenAPI(
  *     basePath="/api",
  *     schemes={"http", "https"},
  *     host=L5_SWAGGER_CONST_HOST,
- *     @SWG\Info(
+ *     @OA\Info(
  *         version="1.0.0",
  *         title="L5 Swagger API",
  *         description="L5 Swagger API description",
- *         @SWG\Contact(
+ *         @OA\Contact(
  *             email="saitokdev@gmail.com"
  *         ),
  *     ),
- *     @SWG\SecurityScheme(
+ *     @OA\SecurityScheme(
  *         securityDefinition="bearer_token",
  *         type="apiKey",
  *         name="Authorization",
@@ -35,6 +35,17 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *     )
  * )
  */
+
+/**
+ * @OA\Info(
+ *     version="1.0.0",
+ *     title="L5 Swagger API",
+ *     description="L5 Swagger API description",
+ *     @OA\Contact(
+ *         email="saitokdev@gmail.com"
+ *     ),
+ * ),
+*/
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

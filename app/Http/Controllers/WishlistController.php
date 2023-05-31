@@ -7,7 +7,7 @@ use App\Subscription;
 use App\User;
 use App\Wishlist;
 use Carbon\Carbon;
-use Grimzy\LaravelMysqlSpatial\Types\Point;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,8 +86,8 @@ class WishlistController extends Controller
         \Log::warning("savedWishList    ".json_encode($wishlist));
 
         $response = [];
-        $response["currentLocation"]["lat"] = (double) $wishlist->location->getLat();
-        $response["currentLocation"]["lng"] = (double) $wishlist->location->getLng();
+        $response["currentLocation"]["lat"] = (double) $wishlist->location->latitude;
+        $response["currentLocation"]["lng"] = (double) $wishlist->location->longitude;
         $response["filter"]["fromPrice"] = (float) $wishlist->from_price;
         $response["filter"]["toPrice"] = (float) $wishlist->to_price;
         $response["filter"]["fromDistance"] = (float) $wishlist->from_distance;
@@ -127,8 +127,8 @@ class WishlistController extends Controller
 
 
         $response = [];
-        $response["currentLocation"]["lat"] = (double) $wishlist->location->getLat();
-        $response["currentLocation"]["lng"] = (double) $wishlist->location->getLng();
+        $response["currentLocation"]["lat"] = (double) $wishlist->location->latitude;
+        $response["currentLocation"]["lng"] = (double) $wishlist->location->longitude;
         $response["filter"]["fromPrice"] = (float) $wishlist->from_price;
         $response["filter"]["toPrice"] = (float) $wishlist->to_price;
         $response["filter"]["fromDistance"] = (float) $wishlist->from_distance;
