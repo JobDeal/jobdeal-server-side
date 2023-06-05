@@ -14,23 +14,32 @@ use Symfony\Component\Debug\Debug;
 class DirectionsController extends Controller
 {
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="lat",
+     *    parameter="lat"
+     * )
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="lng",
+     *    parameter="lng"
+     * )
+     * @OA\Get(
+     *     tags={"Direction"},
      *     path="/directions/address/{lat}/{lng}",
      *     summary="Get address from location",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="lat",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/lat"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="lng",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/lng"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -59,17 +68,22 @@ class DirectionsController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="address",
+     *    parameter="address"
+     * )
+     * @OA\Get(
+     *     tags={"Direction"},
      *     path="/directions/location/{address}",
      *     summary="Get location from address",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="address",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/address"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

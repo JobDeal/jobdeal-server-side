@@ -36,6 +36,7 @@ class JobController extends Controller
 {
     /**
      * @OA\Post(
+     *     tags={"Job"},
      *     path="/job/add",
      *     summary="Add a job",
      *     security={{"bearer_token":{}}},
@@ -135,6 +136,7 @@ class JobController extends Controller
 
     /**
      * @OA\Put(
+     *     tags={"Job"},
      *     path="/job/edit",
      *     summary="Update a job",
      *     security={{"bearer_token":{}}},
@@ -255,6 +257,7 @@ class JobController extends Controller
 
     /**
      * @OA\Delete(
+     *     tags={"Job"},
      *     path="/job/delete",
      *     summary="Delete a job",
      *     security={{"bearer_token":{}}},
@@ -285,6 +288,7 @@ class JobController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"Job"},
      *     path="/job/report",
      *     summary="Add report to a job",
      *     security={{"bearer_token":{}}},
@@ -340,6 +344,7 @@ class JobController extends Controller
      *    parameter="job_id"
      * )
      * @OA\Get(
+     *     tags={"Job"},
      *     path="/job/get/{id}",
      *     summary="Get a job",
      *     security={{"bearer_token":{}}},
@@ -364,6 +369,7 @@ class JobController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"Job"},
      *     path="/job/recent",
      *     summary="Get recent jobs",
      *     @OA\Response(
@@ -396,6 +402,7 @@ class JobController extends Controller
      *     parameter="page"
      * )
      * @OA\Post(
+     *     tags={"Job"},
      *     path="/job/filter/{type}/{page}",
      *     summary="Filter jobs",
      *     security={{"bearer_token":{}}},
@@ -510,6 +517,7 @@ class JobController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"Job"},
      *     path="/job/apply",
      *     summary="Apply to a job",
      *     security={{"bearer_token":{}}},
@@ -581,6 +589,7 @@ class JobController extends Controller
      *    parameter="jobId"
      * )
      * @OA\Get(
+     *     tags={"Job"},
      *     path="/job/applicants/{jobId}",
      *     summary="Get the applicants of the job",
      *     security={{"bearer_token":{}}},
@@ -610,6 +619,7 @@ class JobController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"Job"},
      *     path="/job/applicants/choose/{jobId}",
      *     summary="Choose applicant",
      *     security={{"bearer_token":{}}},
@@ -703,6 +713,7 @@ class JobController extends Controller
      *    parameter="userId"
      * )
      * @OA\Get(
+     *     tags={"Job"},
      *     path="/job/buyer/getAll/{userId}/{page}",
      *     summary="Get buyer jobs",
      *     security={{"bearer_token":{}}},
@@ -730,6 +741,7 @@ class JobController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"Job"},
      *     path="/job/doer/getAll/{page}",
      *     summary="Get doer jobs",
      *     security={{"bearer_token":{}}},
@@ -753,6 +765,7 @@ class JobController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"Job"},
      *     path="job/doer/v2/getAll/{type}/{page}",
      *     summary="Get doer jobs",
      *     security={{"bearer_token":{}}},

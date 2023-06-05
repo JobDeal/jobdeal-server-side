@@ -14,33 +14,34 @@ use Illuminate\Support\Facades\Validator;
 class WishlistController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Wishlist"},
      *     path="/wishlist/update",
      *     summary="Update wishlist",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(
-     *                 property="filter",
-     *                 type="object",
-     *                 @SWG\Property(property="fromPrice", type="string"),
-     *                 @SWG\Property(property="toPrice", type="string"),
-     *                 @SWG\Property(property="fromDistance", type="string"),
-     *                 @SWG\Property(property="toDistance", type="string"),
-     *                 @SWG\Property(property="categories", type="string")
-     *             ),
-     *             @SWG\Property(
-     *                 property="currentLocation",
-     *                 type="object",
-     *                 @SWG\Property(property="lat", type="string"),
-     *                 @SWG\Property(property="lng", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="filter",
+     *                     type="object",
+     *                     @OA\Property(property="fromPrice", type="string"),
+     *                     @OA\Property(property="toPrice", type="string"),
+     *                     @OA\Property(property="fromDistance", type="string"),
+     *                     @OA\Property(property="toDistance", type="string"),
+     *                     @OA\Property(property="categories", type="string")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="currentLocation",
+     *                     type="object",
+     *                     @OA\Property(property="lat", type="string"),
+     *                     @OA\Property(property="lng", type="string")
+     *                 )
      *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -99,11 +100,12 @@ class WishlistController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Wishlist"},
      *     path="/wishlist/get",
      *     summary="Get wishlists",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

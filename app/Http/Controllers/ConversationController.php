@@ -19,11 +19,12 @@ use Illuminate\Support\Facades\Validator;
 class ConversationController extends Controller
 {
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Conversation"},
      *     path="/conversation/user/unread",
      *     summary="Get unread conversations",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -38,17 +39,15 @@ class ConversationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Conversation"},
      *     path="/conversation/all/{page}",
      *     summary="Get conversations",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -67,23 +66,25 @@ class ConversationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="conversationId",
+     *    parameter="conversationId"
+     * )
+     * @OA\Get(
+     *     tags={"Conversation"},
      *     path="/conversation/message/{conversationId}/{page}",
      *     summary="Get messages by conversation Id",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="conversationId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/conversationId"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -112,21 +113,22 @@ class ConversationController extends Controller
 
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Conversation"},
      *     path="/conversation/message/add",
      *     summary="Add message to the conversation",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="conversationId", type="integer"),
-     *             @SWG\Property(property="conversationName", type="string"),
-     *             @SWG\Property(property="body", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="conversationId", type="integer"),
+     *                 @OA\Property(property="conversationName", type="string"),
+     *                 @OA\Property(property="body", type="string")
+     *             )
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -218,17 +220,22 @@ class ConversationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="messageId",
+     *    parameter="messageId"
+     * )
+     * @OA\Get(
+     *     tags={"Conversation"},
      *     path="/conversation/message/{id}",
      *     summary="Get message by Id",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/messageId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -252,21 +259,23 @@ class ConversationController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Conversation"},
      *     path="/conversation/message/get",
      *     summary="Get message by Ids",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         @SWG\Schema(
-     *             type="array",
-     *             @SWG\Items(
-     *                 type="integer"
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="integer"
+     *                 )
      *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -290,17 +299,22 @@ class ConversationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="id",
+     *    parameter="conversation_id"
+     * )
+     * @OA\Get(
+     *     tags={"Conversation"},
      *     path="/conversation/get/{id}",
      *     summary="Get conversation by Id",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/conversation_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

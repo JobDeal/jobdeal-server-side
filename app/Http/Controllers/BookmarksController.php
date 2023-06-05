@@ -14,19 +14,20 @@ use Illuminate\Http\Request;
 class BookmarksController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Bookmark"},
      *     path="/bookmark/add",
      *     summary="Add a bookmark",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer", description="Job ID")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -52,19 +53,20 @@ class BookmarksController extends Controller
     }
 
     /**
-     * @SWG\Delete(
+     * @OA\Delete(
+     *     tags={"Bookmark"},
      *     path="/bookmark/remove",
      *     summary="Remove a bookmark",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer", description="Job ID")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer", description="Job ID")
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -87,16 +89,15 @@ class BookmarksController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Bookmark"},
      *     path="/bookmark/all/{page}",
      *     summary="Get all categories",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

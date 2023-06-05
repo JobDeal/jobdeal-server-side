@@ -48,25 +48,23 @@ class PaymentController extends Controller
     /*---------------------------------SWISH--------------------------------------*/
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/swish/pay/job/{type}",
      *     summary="Pay job with Swish",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/type"
      *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer")
+     *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -171,30 +169,30 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/swish/pay/choose",
      *     summary="Choose swish pay",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="price", type="string"),
-     *             @SWG\Property(
-     *                 property="user",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="price", type="string"),
+     *                 @OA\Property(
+     *                     property="user",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 )
      *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -278,27 +276,22 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/swish/callback",
      *     summary="Choose swish pay",
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="status", type="string"),
-     *             @SWG\Property(property="payeePaymentReference", type="string"),
-     *             @SWG\Property(property="message", type="string"),
-     *             @SWG\Property(property="errorMessage", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="status", type="string"),
+     *                 @OA\Property(property="payeePaymentReference", type="string"),
+     *                 @OA\Property(property="message", type="string"),
+     *                 @OA\Property(property="errorMessage", type="string")
+     *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -358,17 +351,22 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="orderId",
+     *    parameter="orderId"
+     * )
+     * @OA\Get(
+     *     tags={"Payment"},
      *     path="/payment/swish/complete/{orderId}",
      *     summary="Choose swish pay",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="orderId",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/orderId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -448,25 +446,23 @@ class PaymentController extends Controller
 
     //method for pay boost, speedy, boosted speedy, list doers
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/klarna/pay/job/{type}",
      *     summary="Pay job with Klarna",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/type"
      *     ),
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="id", type="integer")
+     *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -545,29 +541,30 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/klarna/pay/choose",
      *     summary="Choose klarna pay",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="price", type="string"),
-     *             @SWG\Property(
-     *                 property="job",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
-     *             ),
-     *             @SWG\Property(
-     *                 property="user",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="price", type="string"),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="user",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 )
      *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -633,11 +630,12 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/klarna/pay/subscribe",
      *     summary="Subscribe klarna pay",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -739,17 +737,15 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Payment"},
      *     path="/payment/klarna/complete/{orderId}",
      *     summary="Choose klarna pay",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="orderId",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/orderId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -881,11 +877,12 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/payment/klarna/subscribe/cancel",
      *     summary="Cancel klarna subscription",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -918,30 +915,28 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
-     *     path="/payment/klarna/push/{order_id}",
+     * @OA\Post(
+     *     tags={"Payment"},
+     *     path="/payment/klarna/push/{orderId}",
      *     summary="Push klarna event",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="order_id",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/orderId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
      * )
      */
-    public function klarnaPushEvent(Request $request, $order_id)
+    public function klarnaPushEvent(Request $request, $orderId)
     {
-        Log::debug("Klarna Push Event: " . $order_id);
-        $payment = Payment::where("ref_id", "=", $order_id)->first();
+        Log::debug("Klarna Push Event: " . $orderId);
+        $payment = Payment::where("ref_id", "=", $orderId)->first();
         $client = new Client();
 
         try {
-            $res = $client->request("get", "https://api.playground.klarna.com/ordermanagement/v1/orders/$order_id", [
+            $res = $client->request("get", "https://api.playground.klarna.com/ordermanagement/v1/orders/$orderId", [
                 'headers' => [
                     'Authorization' => 'Basic ' . Helper::klarnaAuth()
                 ]
@@ -954,7 +949,7 @@ class PaymentController extends Controller
 
 
         try {
-            $res = $client->request("post", "https://api.playground.klarna.com/ordermanagement/v1/orders/$order_id/acknowledge", [
+            $res = $client->request("post", "https://api.playground.klarna.com/ordermanagement/v1/orders/$orderId/acknowledge", [
                 'headers' => [
                     'Authorization' => 'Basic ' . Helper::klarnaAuth()
                 ]
@@ -975,7 +970,7 @@ class PaymentController extends Controller
         ];
 
         try {
-            $res = $client->request("post", "https://api.playground.klarna.com/ordermanagement/v1/orders/$order_id/captures", [
+            $res = $client->request("post", "https://api.playground.klarna.com/ordermanagement/v1/orders/$orderId/captures", [
                 'headers' => [
                     'Authorization' => 'Basic ' . Helper::klarnaAuth()
                 ],
@@ -993,29 +988,27 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Get(
-     *     path="/payment/klarna/confirmation/{order_id}",
+     * @OA\Get(
+     *     tags={"Payment"},
+     *     path="/payment/klarna/confirmation/{orderId}",
      *     summary="Cancel klarna event",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="order_id",
-     *         required=true,
-     *         type="string"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/orderId"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
      * )
      */
-    public function klarnaConfirmationEvent($order_id)
+    public function klarnaConfirmationEvent($orderId)
     {
-        Log::debug("Klarna Confirmation Event: " . $order_id);
+        Log::debug("Klarna Confirmation Event: " . $orderId);
 
         $client = new Client();
         try {
-            $res = $client->request("get", "https://api.playground.klarna.com/checkout/v3/orders/" . $order_id, [
+            $res = $client->request("get", "https://api.playground.klarna.com/checkout/v3/orders/" . $orderId, [
                 'headers' => [
                     'Authorization' => 'Basic ' . Helper::klarnaAuth()
                 ]
@@ -1145,29 +1138,30 @@ class PaymentController extends Controller
     }
 
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Payment"},
      *     path="/price/calculate",
      *     summary="Calculate price",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="type", type="string"),
-     *             @SWG\Property(
-     *                 property="applicant",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
-     *             ),
-     *             @SWG\Property(
-     *                 property="job",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer"),
-     *                 @SWG\Property(property="price", type="string")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="type", type="string"),
+     *                 @OA\Property(
+     *                     property="applicant",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer"),
+     *                     @OA\Property(property="price", type="string")
+     *                 )
      *             )
      *         )
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

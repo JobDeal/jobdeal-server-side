@@ -14,8 +14,504 @@
         }
     ],
     "paths": {
+        "/bookmark/add": {
+            "post": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "Add a bookmark",
+                "operationId": "003d9cab4359d6cd9e0b076a304710f4",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "Job ID",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/bookmark/remove": {
+            "delete": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "Remove a bookmark",
+                "operationId": "98cedfac631e1dbce436fe4b62ddf632",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "description": "Job ID",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/bookmark/all/{page}": {
+            "get": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "Get all categories",
+                "operationId": "41ce830bf94379b0cdbd0feea5569362",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/category/add": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Add a category",
+                "operationId": "b45584f9b122b1e1b592c42cca6df922",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "parentId": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "color": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/category/get/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get a category",
+                "operationId": "cf95d02ca303e2292bf8a40223059473",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/category/all/{root_id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get sub categories",
+                "operationId": "ddc1d45431e588b21c3c6eb72f7f1512",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category_root_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/category/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete a category",
+                "operationId": "3b785d6f30699297039bc127591771a5",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/category_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/user/unread": {
+            "get": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get unread conversations",
+                "operationId": "e8665d890367807b10cda5c1ee7b2575",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/all/{page}": {
+            "get": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get conversations",
+                "operationId": "9764bc24747bc406628c5e81565c0304",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/message/{conversationId}/{page}": {
+            "get": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get messages by conversation Id",
+                "operationId": "acac3eb042d537fae0d88e9c22aaeae1",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/conversationId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/message/add": {
+            "post": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Add message to the conversation",
+                "operationId": "48adafdf9b34b48835d8739c859b4524",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "conversationId": {
+                                        "type": "integer"
+                                    },
+                                    "conversationName": {
+                                        "type": "string"
+                                    },
+                                    "body": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/message/{id}": {
+            "get": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get message by Id",
+                "operationId": "4fb8fe7ada1eb7a5490f0cc0aae8e846",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/messageId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/message/get": {
+            "post": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get message by Ids",
+                "operationId": "c319570bd62fecb90e2b193934b06b75",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/conversation/get/{id}": {
+            "get": {
+                "tags": [
+                    "Conversation"
+                ],
+                "summary": "Get conversation by Id",
+                "operationId": "0eb2a4bf7758850891607eead0440bd2",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/conversation_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/user/device/add": {
+            "post": {
+                "tags": [
+                    "Device"
+                ],
+                "summary": "Add device to the user",
+                "operationId": "ab9c210098c89785a9a0584e144c94b2",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "appVersion": {
+                                        "type": "string"
+                                    },
+                                    "model": {
+                                        "type": "string"
+                                    },
+                                    "osVersion": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/directions/address/{lat}/{lng}": {
+            "get": {
+                "tags": [
+                    "Direction"
+                ],
+                "summary": "Get address from location",
+                "operationId": "f397580c17dbf9319a07632926c9bd3d",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/lat"
+                    },
+                    {
+                        "$ref": "#/components/parameters/lng"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/directions/location/{address}": {
+            "get": {
+                "tags": [
+                    "Direction"
+                ],
+                "summary": "Get location from address",
+                "operationId": "373f1d2310d4483a3aa0035f41356144",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/address"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/job/add": {
             "post": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Add a job",
                 "operationId": "c142cfcb70de18a448bfa72f4871e775",
                 "requestBody": {
@@ -92,6 +588,9 @@
         },
         "/job/edit": {
             "put": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Update a job",
                 "operationId": "b46e979567a352427d753ce7570cf3b6",
                 "requestBody": {
@@ -175,6 +674,9 @@
         },
         "/job/delete": {
             "delete": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Delete a job",
                 "operationId": "ef4c84d1b66be239894479625fdc76b7",
                 "requestBody": {
@@ -206,6 +708,9 @@
         },
         "/job/report": {
             "post": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Add report to a job",
                 "operationId": "f059671cca959885e3393991eb5b29b0",
                 "requestBody": {
@@ -252,6 +757,9 @@
         },
         "/job/get/{id}": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get a job",
                 "operationId": "c85093023e5f7b79246333df6bd8961d",
                 "parameters": [
@@ -273,6 +781,9 @@
         },
         "/job/recent": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get recent jobs",
                 "operationId": "7ffdd1f3f348f66cd51ff4238ec22590",
                 "responses": {
@@ -284,6 +795,9 @@
         },
         "/job/filter/{type}/{page}": {
             "post": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Filter jobs",
                 "operationId": "0ae3e8a0a49bafd86202c3ab91d88b0d",
                 "parameters": [
@@ -339,6 +853,9 @@
         },
         "/job/apply": {
             "post": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Apply to a job",
                 "operationId": "2a535aeed0ddea5a915cf58626940de0",
                 "requestBody": {
@@ -377,6 +894,9 @@
         },
         "/job/applicants/{jobId}": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get the applicants of the job",
                 "operationId": "6399a943814803079c8ba68e4537622b",
                 "parameters": [
@@ -398,6 +918,9 @@
         },
         "/job/applicants/choose/{jobId}": {
             "post": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Choose applicant",
                 "operationId": "ab16d1a96c1d0f9f6fb12abe6d9411ac",
                 "parameters": [
@@ -451,6 +974,9 @@
         },
         "/job/buyer/getAll/{userId}/{page}": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get buyer jobs",
                 "operationId": "9fe9face9ba99f399729dde73489ffe6",
                 "parameters": [
@@ -475,6 +1001,9 @@
         },
         "/job/doer/getAll/{page}": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get doer jobs",
                 "operationId": "bf8d0109cb3fded00952224c45f5cd39",
                 "parameters": [
@@ -496,6 +1025,9 @@
         },
         "job/doer/v2/getAll/{type}/{page}": {
             "get": {
+                "tags": [
+                    "Job"
+                ],
                 "summary": "Get doer jobs",
                 "operationId": "c1cef296b9099e2388247e77c32095b7",
                 "parameters": [
@@ -518,8 +1050,659 @@
                 ]
             }
         },
+        "/notification/get/{id}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get a notification",
+                "operationId": "36e5cc47189824900663658258aac4fc",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/notification_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/notification/app/{page}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get all notification",
+                "operationId": "6fc9c48ccdddecc0b6367746efaf1e1f",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/notification/read/{id}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Read notification",
+                "operationId": "0b04247dbc18091d7fd419af03bdfe8f",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/notification_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/notification/types/{type}/{page}": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get Separated Notifications",
+                "operationId": "6d9f6441cca8fbd7c5e0742a0434809e",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/type"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/notification/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Delete a notification",
+                "operationId": "3dee53d70e75ac52cea5db72e6a16869",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/notification_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/notification/unread": {
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get unread count",
+                "operationId": "ee74ee5169aee760e08037a9992f0cd7",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/swish/pay/job/{type}": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Pay job with Swish",
+                "operationId": "00a2e4ca223b5e700bc3986fb1afcd57",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/type"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/swish/pay/choose": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Choose swish pay",
+                "operationId": "561abe8241a136660437d8b2a52fb906",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "price": {
+                                        "type": "string"
+                                    },
+                                    "user": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "job": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/swish/callback": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Choose swish pay",
+                "operationId": "02e5c54ca2fe51954cab1cf9c5099332",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "payeePaymentReference": {
+                                        "type": "string"
+                                    },
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                    "errorMessage": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/payment/swish/complete/{orderId}": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Choose swish pay",
+                "operationId": "fdf22b352d9c1346eb6150a4771b997d",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orderId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/pay/job/{type}": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Pay job with Klarna",
+                "operationId": "6ec60d661704b72dfd45a197d597b7a9",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/type"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/pay/choose": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Choose klarna pay",
+                "operationId": "d5b1af5bcea117b9eabc89e898660e90",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "price": {
+                                        "type": "string"
+                                    },
+                                    "job": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "user": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/pay/subscribe": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Subscribe klarna pay",
+                "operationId": "386acc4b00e8438f945617226a297090",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/complete/{orderId}": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Choose klarna pay",
+                "operationId": "20e2ea9333a093983f24810ac64b7626",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orderId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/subscribe/cancel": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Cancel klarna subscription",
+                "operationId": "88129748e9fbf23cbd02c86ed07b21a3",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/push/{orderId}": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Push klarna event",
+                "operationId": "9502f817a098708d4bbc6f8cd3cbc6f8",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orderId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/payment/klarna/confirmation/{orderId}": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Cancel klarna event",
+                "operationId": "099eb72195a3fdde85587986ace01a59",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/orderId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/price/calculate": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Calculate price",
+                "operationId": "0e6986ade72c8e8c625f2d06b60c5f1a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "applicant": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "job": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "price": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/rate/add": {
+            "post": {
+                "tags": [
+                    "Rate"
+                ],
+                "summary": "Add a rate",
+                "operationId": "8ad80d422e98ef1e13c9a80dd6786a0e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "rate": {
+                                        "type": "string"
+                                    },
+                                    "comment": {
+                                        "type": "string"
+                                    },
+                                    "buyer": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "job": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "doer": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/rate/byBuyerId/{userId}/{page}": {
+            "get": {
+                "tags": [
+                    "Rate"
+                ],
+                "summary": "Get user rates",
+                "operationId": "f9d0723a67f4c0d810f673d2a4eef363",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/rate/byDoerId/{userId}/{page}": {
+            "get": {
+                "tags": [
+                    "Rate"
+                ],
+                "summary": "Get doer rates",
+                "operationId": "d92786c5bfd0a27bf89403e700509a77",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/userId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
         "/user/login": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Login, generate auth token",
                 "operationId": "df2c1d79263b8ad0f88e3f04c5767310",
                 "requestBody": {
@@ -557,6 +1740,9 @@
         },
         "/user/register": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Register",
                 "operationId": "d25ccfe75d772272fa3e5adbe0636701",
                 "requestBody": {
@@ -624,6 +1810,9 @@
         },
         "/user/get/{userId}": {
             "get": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Get a user",
                 "operationId": "7a366c285a30c1dae433d6e2aab9f581",
                 "parameters": [
@@ -645,6 +1834,9 @@
         },
         "/panel/user/get/{page}": {
             "get": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Get users list",
                 "operationId": "26de4908ceceb77b4f28c70019f408aa",
                 "parameters": [
@@ -666,6 +1858,9 @@
         },
         "/user/update": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Update user",
                 "operationId": "18b218d88657d5d3087fd99b46a408ce",
                 "requestBody": {
@@ -738,6 +1933,9 @@
         },
         "/user/password": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Update password",
                 "operationId": "d79616a632d42ff9ac20233484da602c",
                 "requestBody": {
@@ -771,6 +1969,9 @@
         },
         "/user/verify/{token}": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Verify email",
                 "operationId": "6bb5f4f318e1b5670186eea184e20425",
                 "parameters": [
@@ -792,6 +1993,9 @@
         },
         "/forgot-password/{token}": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Web Reset password",
                 "operationId": "ba2775c6e20c7e4c00084102bedf6ae7",
                 "parameters": [
@@ -808,6 +2012,9 @@
         },
         "/user/resetpassword": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Reset password",
                 "operationId": "c3e2d51c14fbdfd53495ae82c7aefc02",
                 "requestBody": {
@@ -836,6 +2043,9 @@
         },
         "/user/password/forgot": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Forgot password",
                 "operationId": "718711eadbf5fb94f433529c6467178b",
                 "requestBody": {
@@ -861,6 +2071,9 @@
         },
         "/user/logout": {
             "get": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Logout",
                 "operationId": "d9cc2a9b58ac66d1f22a147f9a0ae1c8",
                 "responses": {
@@ -877,6 +2090,9 @@
         },
         "/user/delete": {
             "delete": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Delete account",
                 "operationId": "f341908fc8fbf7ef5d104aea7af22273",
                 "responses": {
@@ -893,6 +2109,9 @@
         },
         "/bankid/auth": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Bank ID Auth",
                 "operationId": "0de0b38f33ba6fe628518ab64130a6dd",
                 "requestBody": {
@@ -918,6 +2137,9 @@
         },
         "/bankid/collect": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Bank ID Collect",
                 "operationId": "5172ea7b8e936c5c3718a0f5a657793a",
                 "requestBody": {
@@ -943,6 +2165,9 @@
         },
         "/verification/send": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Request Verification",
                 "operationId": "4d7a4fad6e82453145cbf710cefe3b25",
                 "requestBody": {
@@ -971,6 +2196,9 @@
         },
         "/verification/verify": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Verify code",
                 "operationId": "04e1f2f01a527e870ca45d4ce898ac61",
                 "requestBody": {
@@ -1002,6 +2230,9 @@
         },
         "/user/location/update": {
             "post": {
+                "tags": [
+                    "User"
+                ],
                 "summary": "Update location",
                 "operationId": "cd2a66516c879032408b6b3e98fb183a",
                 "requestBody": {
@@ -1035,10 +2266,154 @@
                     }
                 ]
             }
+        },
+        "/wishlist/update": {
+            "post": {
+                "tags": [
+                    "Wishlist"
+                ],
+                "summary": "Update wishlist",
+                "operationId": "82b697ae38ce1d6e523a3f81b3c76829",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "filter": {
+                                        "properties": {
+                                            "fromPrice": {
+                                                "type": "string"
+                                            },
+                                            "toPrice": {
+                                                "type": "string"
+                                            },
+                                            "fromDistance": {
+                                                "type": "string"
+                                            },
+                                            "toDistance": {
+                                                "type": "string"
+                                            },
+                                            "categories": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "currentLocation": {
+                                        "properties": {
+                                            "lat": {
+                                                "type": "string"
+                                            },
+                                            "lng": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/wishlist/get": {
+            "get": {
+                "tags": [
+                    "Wishlist"
+                ],
+                "summary": "Get wishlists",
+                "operationId": "ba9bb1b6dcee93b80a830b4d6c6df9d1",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
         "parameters": {
+            "category_id": {
+                "name": "id",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "category_root_id": {
+                "name": "root_id",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "conversationId": {
+                "name": "conversationId",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "messageId": {
+                "name": "messageId",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "conversation_id": {
+                "name": "id",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "lat": {
+                "name": "lat",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "lng": {
+                "name": "lng",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "address": {
+                "name": "address",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
             "job_id": {
                 "name": "id",
                 "in": "path",
@@ -1073,6 +2448,22 @@
             },
             "userId": {
                 "name": "userId",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "notification_id": {
+                "name": "notification_id",
+                "in": "path",
+                "allowReserved": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "orderId": {
+                "name": "orderId",
                 "in": "path",
                 "allowReserved": true,
                 "schema": {

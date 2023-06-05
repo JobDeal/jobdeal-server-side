@@ -39,6 +39,7 @@ class UserController extends Controller
 {
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/login",
      *     summary="Login, generate auth token",
      *     @OA\RequestBody(
@@ -137,6 +138,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/register",
      *     summary="Register",
      *     @OA\RequestBody(
@@ -266,6 +268,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"User"},
      *     path="/user/get/{userId}",
      *     summary="Get a user",
      *     security={{"bearer_token":{}}},
@@ -323,6 +326,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"User"},
      *     path="/panel/user/get/{page}",
      *     summary="Get users list",
      *     security={{"bearer_token":{}}},
@@ -343,6 +347,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/update",
      *     summary="Update user",
      *     security={{"bearer_token":{}}},
@@ -456,6 +461,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/password",
      *     summary="Update password",
      *     security={{"bearer_token":{}}},
@@ -502,6 +508,7 @@ class UserController extends Controller
      *    parameter="token"
      * )
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/verify/{token}",
      *     summary="Verify email",
      *     security={{"bearer_token":{}}},
@@ -545,6 +552,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/forgot-password/{token}",
      *     summary="Web Reset password",
      *     @OA\Parameter(
@@ -563,6 +571,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/resetpassword",
      *     summary="Reset password",
      *     @OA\RequestBody(
@@ -604,6 +613,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/password/forgot",
      *     summary="Forgot password",
      *     @OA\RequestBody(
@@ -658,6 +668,7 @@ class UserController extends Controller
 
     /**
      * @OA\Get(
+     *     tags={"User"},
      *     path="/user/logout",
      *     summary="Logout",
      *     security={{"bearer_token":{}}},
@@ -681,6 +692,7 @@ class UserController extends Controller
 
     /**
      * @OA\Delete(
+     *     tags={"User"},
      *     path="/user/delete",
      *     summary="Delete account",
      *     security={{"bearer_token":{}}},
@@ -715,6 +727,7 @@ class UserController extends Controller
     //----------------------------------BANK ID---------------------------------
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/bankid/auth",
      *     summary="Bank ID Auth",
      *     @OA\RequestBody(
@@ -754,6 +767,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/bankid/collect",
      *     summary="Bank ID Collect",
      *     @OA\RequestBody(
@@ -810,6 +824,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/verification/send",
      *     summary="Request Verification",
      *     @OA\RequestBody(
@@ -877,6 +892,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/verification/verify",
      *     summary="Verify code",
      *     @OA\RequestBody(
@@ -945,6 +961,7 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
+     *     tags={"User"},
      *     path="/user/location/update",
      *     summary="Update location",
      *     security={{"bearer_token":{}}},

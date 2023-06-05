@@ -11,22 +11,24 @@ use Carbon\Carbon;
 class CategoryController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Category"},
      *     path="/category/add",
      *     summary="Add a category",
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="parentId", type="integer"),
-     *             @SWG\Property(property="name", type="string"),
-     *             @SWG\Property(property="color", type="string"),
-     *             @SWG\Property(property="image", type="string"),
-     *             @SWG\Property(property="description", type="string"),
+     *     security={{"bearer_token":{}}},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="parentId", type="integer"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="color", type="string"),
+     *                 @OA\Property(property="image", type="string"),
+     *                 @OA\Property(property="description", type="string"),
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -46,16 +48,22 @@ class CategoryController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="id",
+     *    parameter="category_id"
+     * )
+     * @OA\Get(
+     *     tags={"Category"},
      *     path="/category/get/{id}",
      *     summary="Get a category",
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/category_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -72,16 +80,22 @@ class CategoryController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="root_id",
+     *    parameter="category_root_id"
+     * )
+     * @OA\Get(
+     *     tags={"Category"},
      *     path="/category/all/{root_id}",
-     *     summary="Get all categories",
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="root_id",
-     *         required=true,
-     *         type="integer"
+     *     summary="Get sub categories",
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/category_root_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -113,16 +127,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * @SWG\Delete(
+     * @OA\Delete(
+     *     tags={"Category"},
      *     path="/category/delete/{id}",
      *     summary="Delete a category",
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     security={{"bearer_token":{}}},
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/category_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

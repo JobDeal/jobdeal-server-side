@@ -12,23 +12,24 @@ use Illuminate\Support\Facades\Validator;
 class DevicesController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Device"},
      *     path="/user/device/add",
      *     summary="Add device to the user",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="token", type="string"),
-     *             @SWG\Property(property="type", type="string"),
-     *             @SWG\Property(property="appVersion", type="string"),
-     *             @SWG\Property(property="model", type="string"),
-     *             @SWG\Property(property="osVersion", type="string"),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="token", type="string"),
+     *                 @OA\Property(property="type", type="string"),
+     *                 @OA\Property(property="appVersion", type="string"),
+     *                 @OA\Property(property="model", type="string"),
+     *                 @OA\Property(property="osVersion", type="string"),
+     *             ),
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

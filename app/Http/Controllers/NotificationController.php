@@ -16,17 +16,22 @@ class NotificationController extends Controller
     private const NOTIFICATION_TYPE_BUYER = 1;
 
     /**
-     * @SWG\Get(
+     * @OA\Parameter(
+     *    @OA\Schema(type="integer"),
+     *    in="path",
+     *    allowReserved=true,
+     *    name="notification_id",
+     *    parameter="notification_id"
+     * )
+     * @OA\Get(
+     *     tags={"Notification"},
      *     path="/notification/get/{id}",
      *     summary="Get a notification",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/notification_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -42,17 +47,15 @@ class NotificationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Notification"},
      *     path="/notification/app/{page}",
      *     summary="Get all notification",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -67,17 +70,15 @@ class NotificationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Notification"},
      *     path="/notification/read/{id}",
      *     summary="Read notification",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/notification_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -95,23 +96,18 @@ class NotificationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Notification"},
      *     path="/notification/types/{type}/{page}",
      *     summary="Get Separated Notifications",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="type",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/type"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -135,17 +131,15 @@ class NotificationController extends Controller
     }
 
     /**
-     * @SWG\Delete(
+     * @OA\Delete(
+     *     tags={"Notification"},
      *     path="/notification/delete/{id}",
      *     summary="Delete a notification",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/notification_id"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -167,11 +161,12 @@ class NotificationController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Notification"},
      *     path="/notification/unread",
      *     summary="Get unread count",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )

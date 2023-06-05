@@ -22,35 +22,36 @@ use Illuminate\Support\Facades\Validator;
 class RateController extends Controller
 {
     /**
-     * @SWG\Post(
+     * @OA\Post(
+     *     tags={"Rate"},
      *     path="/rate/add",
      *     summary="Add a rate",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="body",
-     *         name="body",
-     *         required=true,
-     *         @SWG\Schema(
-     *             @SWG\Property(property="rate", type="string"),
-     *             @SWG\Property(property="comment", type="string"),
-     *             @SWG\Property(
-     *                 property="buyer",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
-     *             ),
-     *             @SWG\Property(
-     *                 property="job",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
-     *             ),
-     *             @SWG\Property(
-     *                 property="doer",
-     *                 type="object",
-     *                 @SWG\Property(property="id", type="integer")
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="rate", type="string"),
+     *                 @OA\Property(property="comment", type="string"),
+     *                 @OA\Property(
+     *                     property="buyer",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="job",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="doer",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer")
+     *                 )
      *             )
      *         ),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -139,23 +140,18 @@ class RateController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Rate"},
      *     path="/rate/byBuyerId/{userId}/{page}",
      *     summary="Get user rates",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="userId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/userId"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
@@ -169,23 +165,18 @@ class RateController extends Controller
     }
 
     /**
-     * @SWG\Get(
+     * @OA\Get(
+     *     tags={"Rate"},
      *     path="/rate/byDoerId/{userId}/{page}",
      *     summary="Get doer rates",
      *     security={{"bearer_token":{}}},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="userId",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/userId"
      *     ),
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="page",
-     *         required=true,
-     *         type="integer"
+     *     @OA\Parameter(
+     *         ref="#/components/parameters/page"
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response=200,
      *         description="OK"
      *     )
