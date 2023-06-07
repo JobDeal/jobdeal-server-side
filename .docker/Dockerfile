@@ -2,9 +2,12 @@ FROM php:8.2-apache
 
 ARG USERNAME
 ARG USER_ID
+ARG GROUP_ID
+ARG DOMAIN
 
 # Create user
-RUN useradd -u ${USER_ID} ${USERNAME} --create-home --groups www-data,root
+RUN groupadd -g ${GROUP_ID} ${USERNAME}
+RUN useradd -u ${USER_ID} ${USERNAME} -g ${USERNAME} --create-home --groups www-data
 
 #Install GIT, GnuPG, Python2, NodeJS and NPM
 RUN apt-get update && apt-get install -y git gnupg && \
@@ -34,6 +37,7 @@ ENV APP_NAME ${USERNAME}
 # Install composer from image. You may change it to the latest
 COPY --from=composer:2.4.3 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/${USERNAME}
+RUN echo "ServerName ${DOMAIN}" >> /etc/apache2/apache2.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 #RUN sed -ri -e 's!/;error_log = syslog!error_log = /var/log/apache2/error.log!g' /usr/local/etc/php/php.ini-developement

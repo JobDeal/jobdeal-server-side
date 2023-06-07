@@ -22,6 +22,7 @@ services:
         USERNAME: ${USERNAME}
         USER_ID: ${USER_ID}
         GROUP_ID: ${GROUP_ID}
+        DOMAIN: ${DOMAIN}
     env_file:
       - .env
     restart: unless-stopped
